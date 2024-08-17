@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ./partial/puplic_drawer %>
+    <h1 class="text-center text-2xl m-5">
+      Search avaliable donor in your area
+    </h1>
+    <div class="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 gap-3 m-3">
+      <select class="select select-primary w-full max-w-xs">
+        <option disabled selected>Regoin/State</option>
+        <option>Ayayarwaddy</option>
+      </select>
+      <select class="select select-primary w-full max-w-xs">
+        <option disabled selected>Township</option>
+        <option>Pathein</option>
+        <option>Kyaunggon</option>
+        <option>Eainme</option>
+        <option>Pantanaw</option>
+      </select>
+      <select class="select select-primary w-full max-w-xs">
+        <option disabled selected>Blood Type</option>
+        <option>A</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>O</option>
+        <option>O+</option>
+        <option>O-</option>
+        <option>AB</option>
+        <option>AB+</option>
+        <option>AB-</option>
+      </select>
+      <button class="btn btn-primary w-full max-w-xs">Search</button>
+    </div>
+    <div class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3 m-2">
+      <div class="card glass">
+        <figure>
+          <img src="/images/profile-male.svg" class="w-3/4" alt="car!" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Donor ID : 001</h2>
+          <p>Blood type: A</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary btn-block">
+              Call to local Admin
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card glass">
+        <figure>
+          <img src="/images/profile-female.svg" class="w-3/4" alt="car!" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Donor ID : 002</h2>
+          <p>Blood type: B</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary btn-block">
+              Call to local Admin
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card glass">
+        <figure>
+          <img src="/images/profile-male.svg" class="w-3/4" alt="car!" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Donor ID : 003</h2>
+          <p>Blood type: O</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary btn-block">
+              Call to local Admin
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card glass">
+        <figure>
+          <img src="/images/profile-female.svg" class="w-3/4" alt="car!" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Donor ID : 004</h2>
+          <p>Blood type: O+</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary btn-block">
+              Call to local Admin
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card glass">
+        <figure>
+          <img src="/images/profile-male.svg" class="w-3/4" alt="car!" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Donor ID : 005</h2>
+          <p>Blood type: AB</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary btn-block">
+              Call to local Admin
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card glass">
+        <figure>
+          <img src="/images/profile-female.svg" class="w-3/4" alt="car!" />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Donor ID : 006</h2>
+          <p>Blood type: B+</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary btn-block">
+              Call to local Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en" data-theme="cupcake">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/animate.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>BFL - Blood For Life</title>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log(
+                "ServiceWorker registration successful with scope: ",
+                registration.scope
+              );
+            })
+            .catch((error) => {
+              console.error("ServiceWorker registration failed: ", error);
+            });
+        });
+      }
+    </script>
+  </head>
+  <body class="min-h-screen">
+    <% include ./partial/puplic_drawer %>
+    <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+      <img src="/images/donation.jpg" class="object-cover" />
+      <div class="mt-5 lg:mt-36">
+        <p
+          class="text-3xl text-red-600 text-center mt-5 animate__animated animate__pulse animate__infinite infinit"
+          style="text-shadow: 2px 2px 4px #ff0000; font-weight: bold"
+        >
+          Welcome Our BFL - Blood For Life
+        </p>
+        <p
+          class="text-2xl mt-3 text-center animate__animated animate__flipInX animate__slow"
+          style="font-weight: bold"
+        >
+          Donate blood save a life!
+        </p>
+        <p class="text-xl text-center my-5">
+          If you interest ,you can try to donate blood.
+        </p>
+        <div class="steps steps-vertical lg:steps-horizontal ms-20">
+          <li data-content="✍️" class="step step-primary">Register</li>
+          <li data-content="💁‍♀️" class="step step-primary">Fill Donor Info</li>
+          <li data-content="🤝" class="step step-primary">
+            Connect Local Admin
+          </li>
+          <li data-content="✅" class="step step-primary">Donate</li>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1 class="text-2xl text-center font-bold my-3">Top Donor List</h1>
+      <div class="carousel rounded-box">
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp"
+            alt="Burger"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.webp"
+            alt="Burger"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.webp"
+            alt="Burger"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.webp"
+            alt="Burger"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.webp"
+            alt="Burger"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.webp"
+            alt="Burger"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.webp"
+            alt="Burger"
+          />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
