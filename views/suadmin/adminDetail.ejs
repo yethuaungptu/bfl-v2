@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Detail</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/suadmin_drawer %>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 my-5">
+      <div></div>
+      <div class="card w-full shadow-xl glass">
+        <div class="card-body">
+          <h1 class="text-center text-3xl font-bold my-3">U Mya</h1>
+          <div class="grid grid-cols-2">
+            <p class="text-center font-bold my-3">mya@gmail.com</p>
+            <p class="text-center font-bold my-3">0978788778</p>
+            <p class="text-center font-bold my-3">Ayeyawaddy</p>
+            <p class="text-center font-bold my-3">Pathein</p>
+          </div>
+          <div class="grid grid-cols-2 gap-5">
+            <a href="/suadmin/adminUpdate/123" class="btn btn-warning"
+              >Update</a
+            >
+            <a class="btn btn-error">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

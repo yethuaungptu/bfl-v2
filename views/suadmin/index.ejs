@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Admin</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/suadmin_drawer %>
+    <div class="mt-5">
+      <div
+        class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
+      >
+        <div class="stat">
+          <div class="stat-title">Total Donation</div>
+          <div class="stat-value">3100</div>
+          <div class="stat-desc">Jan 1st - Feb 1st</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Total Donors</div>
+          <div class="stat-value">420</div>
+          <div class="stat-desc">Active</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Total Admin</div>
+          <div class="stat-value">120</div>
+          <div class="stat-desc">Active</div>
+        </div>
+      </div>
+    </div>
+    <h1 class="text-2xl text-center font-bold my-3">
+      Donors list by Blood Type
+    </h1>
+    <div class="mt-5 overflow-x-auto p-5">
+      <table id="example" class="display table my-3" style="width: 100%">
+        <thead>
+          <tr>
+            <th>Township</th>
+            <th>A</th>
+            <th>A-</th>
+            <th>B</th>
+            <th>B-</th>
+            <th>AB</th>
+            <th>AB-</th>
+            <th>O</th>
+            <th>O-</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pathein</td>
+            <td>3</td>
+            <td>4</td>
+            <td>20</td>
+            <td>16</td>
+            <td>9</td>
+            <td>11</td>
+            <td>13</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Kyaunggon</td>
+            <td>13</td>
+            <td>24</td>
+            <td>2</td>
+            <td>1</td>
+            <td>39</td>
+            <td>21</td>
+            <td>23</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Pantanaw</td>
+            <td>3</td>
+            <td>20</td>
+            <td>9</td>
+            <td>13</td>
+            <td>9</td>
+            <td>11</td>
+            <td>13</td>
+            <td>12</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Township</th>
+            <th>A</th>
+            <th>A-</th>
+            <th>B</th>
+            <th>B-</th>
+            <th>AB</th>
+            <th>AB-</th>
+            <th>O</th>
+            <th>O-</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/dataTables.js"></script>
+  <script src="/javascripts/dataTables.tailwindcss.js"></script>
+  <script>
+    new DataTable("#example");
+  </script>
+</html>

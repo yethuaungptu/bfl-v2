@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Management</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/suadmin_drawer %>
+    <h1 class="text-3xl my-7 text-center font-bold">Local Admin List</h1>
+    <div class="grid lg:grid-cols-6 md:grid-cols-1 sm:grid-cols-1">
+      <div></div>
+      <div class="overflow-x-auto col-span-4">
+        <table id="example" class="display table my-3" style="width: 100%">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Regoin/State</th>
+              <th>Township</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            <tr>
+              <th>1</th>
+              <td>U Moe</td>
+              <td>Ayeyawaddy</td>
+              <td>Pathein</td>
+              <td>
+                <a
+                  href="/suadmin/adminDetail/123"
+                  class="btn btn-primary btn-sm"
+                  >Detail</a
+                >
+              </td>
+            </tr>
+            <!-- row 2 -->
+            <tr>
+              <th>2</th>
+              <td>U Toe</td>
+              <td>Yangon</td>
+              <td>Hlaing</td>
+              <td>
+                <a
+                  href="/suadmin/adminDetail/123"
+                  class="btn btn-primary btn-sm"
+                  >Detail</a
+                >
+              </td>
+            </tr>
+            <!-- row 3 -->
+            <tr>
+              <th>3</th>
+              <td>U Poe</td>
+              <td>Ayeyawaddy</td>
+              <td>Kyaunggon</td>
+              <td>
+                <a
+                  href="/suadmin/adminDetail/123"
+                  class="btn btn-primary btn-sm"
+                  >Detail</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mt-3">
+      <div></div>
+      <a href="/suadmin/adminAdd" class="btn btn-primary btn-block btn-sm"
+        >Add</a
+      >
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/dataTables.js"></script>
+  <script src="/javascripts/dataTables.tailwindcss.js"></script>
+  <script>
+    new DataTable("#example");
+  </script>
+</html>
