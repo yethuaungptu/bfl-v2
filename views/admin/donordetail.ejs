@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor Detail</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/admin_drawer %>
+    <h1 class="text-center text-2xl font-bold my-5">Donor Detail</h1>
+    <div class="card lg:card-side bg-base-100 shadow-xl m-5">
+      <figure>
+        <img
+          src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
+          alt="Album"
+        />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title my-3">
+          Mg Moe <small class="font-light">(Not Avaliable by donor)</small>
+        </h2>
+        <div
+          class="grid lg:grid-cols-2 md:rid-cols-2 sm:grid-cols-1 font-bold gap-5"
+        >
+          <p>Blood Type : A</p>
+          <p>Gender : Male</p>
+          <p>Age : 22</p>
+          <p>Weight : 110 Lbs</p>
+        </div>
+        <hr />
+        <div
+          class="grid lg:grid-cols-2 md:rid-cols-2 sm:grid-cols-1 font-bold gap-5"
+        >
+          <p>Phone : 09777888771</p>
+          <p>Address : Pathein</p>
+          <p>Email : moe@gmail.com</p>
+          <p>Last Donation : 12/2/2024</p>
+        </div>
+        <div class="card-actions justify-end my-3">
+          <a class="btn btn-info">Donate Today</a>
+          <a class="btn btn-secondary">Sent Alert Mail</a>
+          <a class="btn btn-primary" href="tel:+959777111437">Call to donor</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

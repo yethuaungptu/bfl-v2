@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor List</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/dataTables.tailwindcss.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/admin_drawer %>
+    <h1 class="text-center text-2xl font-bold my-3">Avaliable Donor List</h1>
+    <div class="mt-5 overflow-x-auto p-5">
+      <table id="example" class="display table my-3" style="width: 100%">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>A</th>
+            <th>A-</th>
+            <th>B</th>
+            <th>B-</th>
+            <th>AB</th>
+            <th>AB-</th>
+            <th>O</th>
+            <th>O-</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mg Moe</td>
+            <td>001</td>
+            <td>A</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
+                >Detail</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>Mg Toe</td>
+            <td>002</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>B-</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
+                >Detail</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>Mg Poe</td>
+            <td>003</td>
+            <td>A</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
+                >Detail</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>Mg Soe</td>
+            <td>004</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>AB-</td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
+                >Detail</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>Mg Lin</td>
+            <td>005</td>
+            <td>A</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
+                >Detail</a
+              >
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>A</th>
+            <th>A-</th>
+            <th>B</th>
+            <th>B-</th>
+            <th>AB</th>
+            <th>AB-</th>
+            <th>O</th>
+            <th>O-</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/dataTables.js"></script>
+  <script src="/javascripts/dataTables.tailwindcss.js"></script>
+  <script>
+    new DataTable("#example");
+  </script>
+</html>

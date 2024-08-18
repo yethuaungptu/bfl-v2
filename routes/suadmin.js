@@ -40,4 +40,10 @@ router.get("/adminUpdate/:id", checkAdmin, async function (req, res) {
   res.render("suadmin/adminUpdate", { locations: locations });
 });
 
+router.get("/logout", checkAdmin, function (req, res) {
+  req.session.destroy(function () {
+    res.redirect("/");
+  });
+});
+
 module.exports = router;
