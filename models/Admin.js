@@ -19,7 +19,7 @@ const AdminSchema = new Schema({
     type: String,
     required: true,
   },
-  township: {
+  district: {
     type: String,
     required: true,
   },

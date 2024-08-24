@@ -13,7 +13,8 @@
       <div></div>
       <div class="card glass w-full">
         <div class="card-body">
-          <form action="/suadmin/adminAdd" method="post" id="frm">
+          <form>
+            <input type="hidden" name="id" id="id" value="<%= admin._id %>" />
             <label class="input input-bordered flex items-center gap-2 my-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +30,7 @@
                 type="text"
                 name="name"
                 class="grow"
-                placeholder="Name"
+                value="<%= admin.name %>"
                 id="name"
               />
             </label>
@@ -52,7 +53,7 @@
                 name="email"
                 id="email"
                 class="grow"
-                placeholder="Email"
+                value="<%= admin.email %>"
               />
             </label>
 
@@ -74,7 +75,7 @@
                 name="password"
                 class="grow"
                 id="password"
-                value="password"
+                placeholder="Password"
               />
             </label>
             <label class="input input-bordered flex items-center gap-2 my-2">
@@ -93,7 +94,7 @@
                 name="phone"
                 class="grow"
                 id="phone"
-                placeholder="Phone no"
+                value="<%= admin.phone %>"
               />
             </label>
             <select
@@ -106,7 +107,11 @@
               id="district"
               name="district"
             ></select>
-            <button type="button" class="btn btn-primary btn-block my-2">
+            <button
+              type="button"
+              id="btnAdd"
+              class="btn btn-primary btn-block my-2"
+            >
               Update
             </button>
           </form>
@@ -135,5 +140,49 @@
               }
           }
       }
+      $(function(){
+        $("#state").val("<%= admin.state %>");
+        var cities = $.grep( regions, function( n, i ) {
+            return n.state == $("#state").val();
+          });
+          addOptions('district', cities);
+        $("#district").val("<%= admin.district %>")
+      })
+
+      $("#btnAdd").click(function(){
+        const name = $("#name").val() || '';
+        const password = $("#password").val() || '';
+        const phone = $("#phone").val() || '';
+        const email = $("#email").val() || '';
+        const state = $("#state").val() || '';
+        const district = $("#district").val() || '';
+        const id = $("#id").val() || '';
+        if (email != "" && state != "" && district != "" && name != "" &&  phone != "" &&  id !="") {
+        const data = { email: email,state:state,district:district,name:name,password:password,phone:phone,id:id };
+        $.ajax("/suadmin/checkAdminWithId", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              $.ajax("/suadmin/adminUpdate", {
+                type: "POST",
+                data: data,
+                success: function (result) {
+                  if (result.status == false) {
+                    alert("Somethings was wrong");
+                  } else {
+                    location.href = "/suadmin/admin"
+                  }
+                },
+              });
+            }
+          },
+        });
+      } else {
+        alert("Please fill all field");
+      }
+      })
   </script>
 </html>

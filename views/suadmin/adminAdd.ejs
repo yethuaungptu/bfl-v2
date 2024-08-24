@@ -13,7 +13,7 @@
       <div></div>
       <div class="card glass w-full">
         <div class="card-body">
-          <form action="/suadmin/adminAdd" method="post" id="frm">
+          <form>
             <label class="input input-bordered flex items-center gap-2 my-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,11 @@
               id="district"
               name="district"
             ></select>
-            <button type="button" class="btn btn-primary btn-block my-2">
+            <button
+              type="button"
+              id="btnAdd"
+              class="btn btn-primary btn-block my-2"
+            >
               Register
             </button>
           </form>
@@ -135,5 +139,39 @@
               }
           }
       }
+      $("#btnAdd").click(function(){
+        const name = $("#name").val() || '';
+        const password = $("#password").val() || '';
+        const phone = $("#phone").val() || '';
+        const email = $("#email").val() || '';
+        const state = $("#state").val() || '';
+        const district = $("#district").val() || '';
+        if (email != "" && state != "" && district != "" && name != "" && password != "" && phone != "") {
+        const data = { email: email,state:state,district:district,name:name,password:password,phone:phone };
+        $.ajax("/suadmin/checkAdmin", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              $.ajax("/suadmin/adminAdd", {
+                type: "POST",
+                data: data,
+                success: function (result) {
+                  if (result.status == false) {
+                    alert("Somethings was wrong");
+                  } else {
+                    location.href = "/suadmin/admin"
+                  }
+                },
+              });
+            }
+          },
+        });
+      } else {
+        alert("Please fill all field");
+      }
+      })
   </script>
 </html>

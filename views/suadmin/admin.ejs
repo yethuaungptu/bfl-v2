@@ -17,7 +17,7 @@
           <!-- head -->
           <thead>
             <tr>
-              <th></th>
+              <th>No</th>
               <th>Name</th>
               <th>Regoin/State</th>
               <th>Township</th>
@@ -25,48 +25,21 @@
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
+            <% for(var i = 0; i < admins.length; i++){%>
             <tr>
-              <th>1</th>
-              <td>U Moe</td>
-              <td>Ayeyawaddy</td>
-              <td>Pathein</td>
+              <th><%= i+1 %></th>
+              <td><%= admins[i].name %></td>
+              <td><%= admins[i].state %></td>
+              <td><%= admins[i].district %></td>
               <td>
                 <a
-                  href="/suadmin/adminDetail/123"
+                  href="/suadmin/adminDetail/<%= admins[i]._id %>"
                   class="btn btn-primary btn-sm"
                   >Detail</a
                 >
               </td>
             </tr>
-            <!-- row 2 -->
-            <tr>
-              <th>2</th>
-              <td>U Toe</td>
-              <td>Yangon</td>
-              <td>Hlaing</td>
-              <td>
-                <a
-                  href="/suadmin/adminDetail/123"
-                  class="btn btn-primary btn-sm"
-                  >Detail</a
-                >
-              </td>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>3</th>
-              <td>U Poe</td>
-              <td>Ayeyawaddy</td>
-              <td>Kyaunggon</td>
-              <td>
-                <a
-                  href="/suadmin/adminDetail/123"
-                  class="btn btn-primary btn-sm"
-                  >Detail</a
-                >
-              </td>
-            </tr>
+            <%}%>
           </tbody>
         </table>
       </div>

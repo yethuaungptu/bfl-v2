@@ -12,21 +12,31 @@
       <div></div>
       <div class="card w-full shadow-xl glass">
         <div class="card-body">
-          <h1 class="text-center text-3xl font-bold my-3">U Mya</h1>
+          <h1 class="text-center text-3xl font-bold my-3"><%= admin.name %></h1>
           <div class="grid grid-cols-2">
-            <p class="text-center font-bold my-3">mya@gmail.com</p>
-            <p class="text-center font-bold my-3">0978788778</p>
-            <p class="text-center font-bold my-3">Ayeyawaddy</p>
-            <p class="text-center font-bold my-3">Pathein</p>
+            <p class="text-center font-bold my-3"><%= admin.email %></p>
+            <p class="text-center font-bold my-3"><%= admin.phone %></p>
+            <p class="text-center font-bold my-3"><%= admin.state %></p>
+            <p class="text-center font-bold my-3"><%= admin.district %></p>
           </div>
           <div class="grid grid-cols-2 gap-5">
-            <a href="/suadmin/adminUpdate/123" class="btn btn-warning"
+            <a
+              href="/suadmin/adminUpdate/<%= admin._id %>"
+              class="btn btn-warning"
               >Update</a
             >
-            <a class="btn btn-error">Delete</a>
+            <button class="btn btn-error" onclick="btnDel('<%= admin._id %>')">
+              Delete
+            </button>
           </div>
         </div>
       </div>
     </div>
   </body>
+  <script>
+    function btnDel(id) {
+      var opt = confirm("Are you sure for delete");
+      if (opt) location.href = "/suadmin/adminDelete/" + id;
+    }
+  </script>
 </html>
