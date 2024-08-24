@@ -13,7 +13,7 @@
       <div></div>
       <div class="card glass w-full">
         <div class="card-body">
-          <form action="/admin/pendingDonorAdd" method="post" id="frm">
+          <form>
             <label class="input input-bordered flex items-center gap-2 my-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,32 @@
               />
             </label>
 
-            <button type="button" class="btn btn-primary btn-block my-2">
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
+                />
+              </svg>
+              <input
+                type="text"
+                name="phone"
+                class="grow"
+                id="phone"
+                placeholder="Phone"
+              />
+            </label>
+
+            <button
+              type="button"
+              id="btnAdd"
+              class="btn btn-primary btn-block my-2"
+            >
               Register
             </button>
           </form>
@@ -100,51 +125,27 @@
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
+            <% for(var i = 0; i < donors.length;i++){%>
             <tr>
-              <th>1</th>
-              <td>Mg Moe</td>
-              <td>moe@gmail.com</td>
+              <th><%= i+1 %></th>
+              <td><%= donors[i].name %></td>
+              <td><%= donors[i].email %></td>
               <td>
                 <button
-                  onclick="my_modal_2.showModal()"
+                  onclick="updateModal('<%= donors[i]._id %>','<%= donors[i].name %>','<%= donors[i].email %>','<%= donors[i].phone %>')"
                   class="btn btn-warning btn-sm"
                 >
                   Update
                 </button>
-                <button class="btn btn-error btn-sm">Delete</button>
-              </td>
-            </tr>
-            <!-- row 2 -->
-            <tr>
-              <th>2</th>
-              <td>Mg Toe</td>
-              <td>toe@gmail.com</td>
-              <td>
                 <button
-                  onclick="my_modal_2.showModal()"
-                  class="btn btn-warning btn-sm"
+                  class="btn btn-error btn-sm"
+                  onclick="delFun('<%= donors[i]._id %>')"
                 >
-                  Update
+                  Delete
                 </button>
-                <button class="btn btn-error btn-sm">Delete</button>
               </td>
             </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>3</th>
-              <td>Mg Poe</td>
-              <td>poe@gmail.com</td>
-              <td>
-                <button
-                  onclick="my_modal_2.showModal()"
-                  class="btn btn-warning btn-sm"
-                >
-                  Update
-                </button>
-                <button class="btn btn-error btn-sm">Delete</button>
-              </td>
-            </tr>
+            <%}%>
           </tbody>
         </table>
       </div>
@@ -153,6 +154,7 @@
       <div class="modal-box">
         <h3 class="text-lg font-bold">Pending Donor Update Form</h3>
         <form action="/admin/pendingDonorUpdate" method="post" id="frm">
+          <input type="hidden" name="id" id="id" />
           <label class="input input-bordered flex items-center gap-2 my-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -164,13 +166,7 @@
                 d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
               />
             </svg>
-            <input
-              type="text"
-              name="name"
-              class="grow"
-              value="Mg Moe"
-              id="name"
-            />
+            <input type="text" name="uname" class="grow" id="uname" />
           </label>
           <label class="input input-bordered flex items-center gap-2 my-2">
             <svg
@@ -188,8 +184,8 @@
             </svg>
             <input
               type="email"
-              name="email"
-              id="email"
+              name="uemail"
+              id="uemail"
               class="grow"
               value="moe@gmail.com"
               readonly
@@ -211,14 +207,33 @@
             </svg>
             <input
               type="password"
-              name="password"
+              name="upassword"
               class="grow"
-              id="password"
+              id="upassword"
               placeholder="password"
             />
           </label>
-
-          <button type="button" class="btn btn-primary btn-block my-2">
+          <label class="input input-bordered flex items-center gap-2 my-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
+              />
+            </svg>
+            <input
+              type="text"
+              name="uphone"
+              class="grow"
+              id="uphone"
+              placeholder="Phone"
+            />
+          </label>
+          <button type="submit" class="btn btn-primary btn-block my-2">
             Update
           </button>
         </form>
@@ -228,4 +243,65 @@
       </form>
     </dialog>
   </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    $("#btnAdd").click(function () {
+      var name = $("#name").val() || "";
+      var email = $("#email").val() || "";
+      var password = $("#password").val() || "";
+      var phone = $("#phone").val() || "";
+      const data = {
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+      };
+      if (name != "" && email != "" && password != "" && phone != "") {
+        $.ajax("/suadmin/checkAdmin", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              $.ajax("/admin/pendingDonorCheck", {
+                type: "POST",
+                data: data,
+                success: function (result) {
+                  if (result.status == false) {
+                    alert("Email is duplicated");
+                  } else {
+                    $.ajax("/admin/pendingDonorAdd", {
+                      type: "POST",
+                      data: data,
+                      success: function (result) {
+                        if (result.status == false) {
+                          alert("Somethings was wrong");
+                        } else {
+                          location.href = "/admin/pendingDonor";
+                        }
+                      },
+                    });
+                  }
+                },
+              });
+            }
+          },
+        });
+      } else {
+        alert("Please fill all fields");
+      }
+    });
+    function updateModal(id, name, email, phone) {
+      my_modal_2.showModal();
+      $("#id").val(id);
+      $("#uname").val(name);
+      $("#uemail").val(email);
+      $("#uphone").val(phone);
+    }
+    function delFun(id) {
+      var opt = confirm("Are you sure for delete");
+      if (opt) location.href = "/admin/pendingDonorDelete/" + id;
+    }
+  </script>
 </html>
