@@ -106,7 +106,7 @@ router.post("/adminUpdate", checkAdmin, async function (req, res) {
       email: req.body.email,
       phone: req.body.phone,
       state: req.body.state,
-      distinct: req.body.distinct,
+      district: req.body.district,
     };
     if (req.body.password)
       update.password = bcrypt.hashSync(
