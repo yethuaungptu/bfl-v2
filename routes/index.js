@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Admin = require("../models/Admin");
+const Donor = require("../models/Donor");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -9,6 +10,23 @@ router.get("/", function (req, res, next) {
 
 router.get("/login", function (req, res, next) {
   res.render("login");
+});
+
+router.post("/login", async function (req, res) {
+  const donor = await Donor.findOne({ email: req.body.email });
+  if (donor != null && Donor.compare(req.body.password, donor.password)) {
+    req.session.donor = {
+      id: donor.id,
+      name: donor.name,
+      email: donor.email,
+      state: donor.state,
+      district: donor.district,
+      isDonorInfoComplete: donor.isDonorInfoComplete,
+    };
+    res.redirect("/donor");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 router.get("/search", function (req, res, next) {

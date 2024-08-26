@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor Home</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/donor_drawer %> <%
+    if(locals.donor.isDonorInfoComplete){%>
+    <h1 class="text-center text-2xl m-5">Your Profile</h1>
+    <div
+      class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mx-2 lg:mx-10"
+    >
+      <div></div>
+      <div class="col-span-2">
+        <div class="card glass w-full">
+          <figure class="px-10 pt-10">
+            <% if(donor.gender == "male"){%>
+            <img
+              src="/images/profile-male.svg"
+              alt="Shoes"
+              class="rounded-xl w-56"
+            />
+            <%}else{%>
+            <img
+              src="/images/profile-female.svg"
+              alt="Shoes"
+              class="rounded-xl w-56"
+            />
+            <%}%>
+          </figure>
+          <div class="card-body items-center text-center">
+            <h2 class="card-title"><%= donor.name %></h2>
+            <div
+              class="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-2 w-full"
+            >
+              <p class="font-semibold">Email : <%= donor.email %></p>
+              <p class="font-semibold">Phone : <%= donor.phone %></p>
+              <p class="font-semibold">State : <%= donor.state %></p>
+              <p class="font-semibold">Township : <%= donor.district %></p>
+              <p class="font-semibold">Blood Type : <%= donor.bloodType %></p>
+              <p class="font-semibold">Weight : <%= donor.weight %> lbs</p>
+              <p class="font-semibold">Gender : <%= donor.gender %></p>
+              <p class="font-semibold">NRC : <%= donor.nrc %></p>
+              <p class="font-semibold">
+                Donation Status : <% if(donor.donationStatus == true){%>
+                <span class="bg-success p-1">Avaliable</span>
+                <%}else{%>
+                <span class="bg-error p-1">Not Avaliable</span>
+                <%}%>
+              </p>
+              <p class="font-semibold">
+                User Status : <% if(donor.userStatus == true){%>
+                <span class="bg-success p-1">Avaliable</span>
+                <%}else{%>
+                <span class="bg-error p-1">Not Avaliable</span>
+                <%}%>
+              </p>
+            </div>
+            <div class="card-actions mt-5">
+              <button class="btn btn-primary" onclick="changePass.showModal()">
+                Change Password
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="changeStatus('<%= !donor.userStatus %>')"
+              >
+                Change User Status
+              </button>
+              <button class="btn btn-accent" onclick="changeEditMode()">
+                Edit Your Profile
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%}else{%>
+    <h1 class="text-center text-2xl m-5">
+      Your Need to provide donor informarion
+    </h1>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 mt-5">
+      <div></div>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title block mx-auto">Your informarion</div>
+          <form>
+            <input type="hidden" name="id" id="id" value="<%= donor._id %>" />
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"
+                />
+                <path
+                  d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
+                />
+              </svg>
+              <input
+                type="email"
+                class="grow"
+                value="<%= donor.email %>"
+                readonly
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
+                />
+              </svg>
+              <input
+                type="text"
+                class="grow"
+                name="name"
+                id="name"
+                value="<%= donor.name %>"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
+                />
+              </svg>
+              <input
+                type="phone"
+                class="grow"
+                name="phone"
+                id="phone"
+                value="<%= donor.phone %>"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M6.5 13a6.47 6.47 0 0 0 3.845-1.258h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1A6.47 6.47 0 0 0 13 6.5 6.5 6.5 0 0 0 6.5 0a6.5 6.5 0 1 0 0 13m0-8.518c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018"
+                />
+              </svg>
+              <select
+                class="select w-full select-ghost"
+                name="bloodType"
+                id="bloodType"
+              >
+                <option disabled selected>Pick your blood type</option>
+                <option value="A+" <%= donor.bloodType == "A+" ? "selected":"" %>>A+</option>
+                <option value="A-" <%= donor.bloodType == "A-" ? "selected":"" %>>A-</option>
+                <option value="B+" <%= donor.bloodType == "B+" ? "selected":"" %>>B+</option>
+                <option value="B-" <%= donor.bloodType == "B-" ? "selected":"" %>>B-</option>
+                <option value="AB+" <%= donor.bloodType == "AB+" ? "selected":"" %>>AB+</option>
+                <option value="AB-" <%= donor.bloodType == "AB-" ? "selected":"" %>>AB-</option>
+                <option value="O+" <%= donor.bloodType == "O+" ? "selected":"" %>>O+</option>
+                <option value="O-" <%= donor.bloodType == "O-" ? "selected":"" %>>O-</option>
+              </select>
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zM8.5 4h6l.5.667V5H1v-.333L1.5 4h6V1h1zM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"
+                />
+              </svg>
+              <input
+                type="number"
+                min="90"
+                max="300"
+                class="grow"
+                name="weight"
+                id="weight"
+                placeholder="Weight (lbs)"
+                value="<%= donor.weight? donor.weight:'' %>"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"
+                />
+              </svg>
+              <select
+                class="select w-full select-ghost"
+                name="gender"
+                id="gender"
+              >
+                <option disabled selected>Pick your gender</option>
+                <option value="male" <%= donor.gender == "male" ? "selected":"" %>>Male</option>
+                <option value="female" <%= donor.gender == "female" ? "selected":"" %>>Female</option>
+              </select>
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"
+                />
+              </svg>
+              <input
+                type="date"
+                class="grow"
+                max="<%= new Date().toJSON().split('T')[0] %>"
+                name="lastDonation"
+                id="lastDonation"
+                placeholder="Last Donation"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+                <path
+                  d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm6 2.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0m3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622M2 5.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5"
+                />
+              </svg>
+              <input
+                type="string"
+                class="grow"
+                name="nrc"
+                id="nrc"
+                placeholder="14/PaTaNa(N)123456"
+                value="<%= donor.nrc ? donor.nrc:'';%>"
+
+              />
+            </label>
+            <button type="button" id="btnAdd" class="btn btn-block btn-primary">
+              Add
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <%}%>
+    <dialog id="changePass" class="modal">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold text-center">Update Password</h3>
+        <form>
+          <input type="hidden" name="id" id="id" value="<%= donor._id %>" />
+          <label class="input input-bordered flex items-center gap-2 my-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <input
+              type="password"
+              name="oldPass"
+              id="oldPass"
+              class="grow"
+              placeholder="old password"
+              required
+            />
+          </label>
+          <label class="input input-bordered flex items-center gap-2 my-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <input
+              type="password"
+              name="newPass"
+              id="newPass"
+              class="grow"
+              placeholder="new password"
+              required
+            />
+          </label>
+          <button
+            class="btn btn-primary block mx-auto"
+            id="btnUpdate"
+            type="button"
+          >
+            Update Password
+          </button>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    function changeEditMode() {
+      $.ajax("/donor/changeEditMode", {
+        type: "POST",
+        data: {},
+        success: function (result) {
+          if (result.status == false) {
+            alert(result.msg);
+          } else {
+            location.href = "/donor/profile";
+          }
+        },
+      });
+    }
+    function changeStatus(status) {
+      $.ajax("/donor/changeStatus", {
+        type: "POST",
+        data: { status: status },
+        success: function (result) {
+          if (result.status == false) {
+            alert(result.msg);
+          } else {
+            location.href = "/donor/profile";
+          }
+        },
+      });
+    }
+    $("#btnAdd").click(function () {
+      const name = $("#name").val();
+      const phone = $("#phone").val();
+      const bloodType = $("#bloodType").val() || "";
+      const weight = $("#weight").val();
+      const gender = $("#gender").val();
+      const lastDonation = $("#lastDonation").val() || "";
+      const nrc = $("#nrc").val();
+      if (
+        name != "" &&
+        phone != "" &&
+        bloodType != "" &&
+        weight != "" &&
+        gender != "" &&
+        nrc != ""
+      ) {
+        const data = {
+          name: name,
+          phone: phone,
+          bloodType: bloodType,
+          weight: weight,
+          gender: gender,
+          lastDonation: lastDonation,
+          nrc: nrc,
+        };
+        $.ajax("/donor/checkInfo", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              $.ajax("/donor/updateInfo", {
+                type: "POST",
+                data: data,
+                success: function (result) {
+                  if (result.status == false) {
+                    alert("Somethings was wrong");
+                  } else {
+                    location.href = "/donor/profile";
+                  }
+                },
+              });
+            }
+          },
+        });
+      } else {
+        alert("Please fill all fields");
+      }
+    });
+
+    $("#btnUpdate").click(function () {
+      const newPass = $("#newPass").val();
+      const oldPass = $("#oldPass").val();
+      if (newPass != "" && oldPass != "") {
+        const data = {
+          newPass: newPass,
+          oldPass: oldPass,
+          id: "<%= donor._id %>",
+        };
+        $.ajax("/donor/updatePass", {
+          type: "POST",
+          data: data,
+          success: function (result) {
+            if (result.status == false) {
+              alert(result.msg);
+            } else {
+              location.href = "/donor/profile";
+            }
+          },
+        });
+      } else {
+        alert("New Password and Old Password not empty");
+      }
+    });
+  </script>
+</html>

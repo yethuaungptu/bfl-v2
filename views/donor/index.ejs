@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor Home</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/donor_drawer %>
+    <h1 class="text-center text-2xl m-5">Welcome <%= locals.donor.name %> !</h1>
+    <div
+      class="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 mx-1 lg:mx-10 gap-5 mt-5 lg:mt-20"
+    >
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title block mx-auto">Your Location</div>
+          <p>State : <%= locals.donor.state %></p>
+          <p>Township : <%= locals.donor.district %></p>
+        </div>
+      </div>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title block mx-auto">Your Local Admin</div>
+          <p>Admin : <%= admin.name %></p>
+          <p>Phone : <%= admin.phone %></p>
+        </div>
+      </div>
+      <div class="card glass w-full">
+        <div class="card-body">
+          <div class="card-title block mx-auto">Your Local Hospital</div>
+          <p>Name : -</p>
+          <p>Address : -</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

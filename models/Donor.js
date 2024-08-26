@@ -37,7 +37,7 @@ const DonorSchema = new Schema({
     type: String,
   },
   lastDonation: {
-    type: String,
+    type: Date,
   },
   userStatus: {
     type: Boolean,
@@ -47,14 +47,8 @@ const DonorSchema = new Schema({
     type: Boolean,
     default: true,
   },
-  nrcState: {
+  nrc: {
     type: String,
-  },
-  nrcTownship: {
-    type: String,
-  },
-  nrcNumber: {
-    type: Number,
   },
   isDonorInfoComplete: {
     type: Boolean,

@@ -9,6 +9,7 @@ var mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var adminRouter = require("./routes/admin");
 var suAdminRouter = require("./routes/suadmin");
+var donorRouter = require("./routes/donor");
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
 app.use("/suadmin", suAdminRouter);
+app.use("/donor", donorRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

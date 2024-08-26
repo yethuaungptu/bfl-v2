@@ -15,8 +15,10 @@
     "express": "~4.16.1",
     "express-session": "^1.18.0",
     "http-errors": "~1.6.3",
+    "mm-nric": "^0.5.0",
     "mongoose": "^8.5.3",
     "morgan": "~1.9.1",
+    "myanmar-mobile-validator": "^1.2.3",
     "workbox-webpack-plugin": "^7.1.0"
   },
   "devDependencies": {
