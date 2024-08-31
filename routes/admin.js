@@ -100,7 +100,7 @@ router.post("/pendingDonorUpdate", checkAdmin, async function (req, res) {
 });
 
 router.get("/pendingDonorDelete/:id", checkAdmin, async function (req, res) {
-  const data = await Donor.findOneAndUpdate(req.params.id, { status: false });
+  const data = await Donor.findByIdAndUpdate(req.params.id, { status: false });
   res.redirect("/admin/pendingDonor");
 });
 
