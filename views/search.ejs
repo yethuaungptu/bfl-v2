@@ -12,119 +12,93 @@
       Search avaliable donor in your area
     </h1>
     <div class="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 gap-3 m-3">
-      <select class="select select-primary w-full max-w-xs">
-        <option disabled selected>Regoin/State</option>
-        <option>Ayayarwaddy</option>
-      </select>
-      <select class="select select-primary w-full max-w-xs">
-        <option disabled selected>Township</option>
-        <option>Pathein</option>
-        <option>Kyaunggon</option>
-        <option>Eainme</option>
-        <option>Pantanaw</option>
-      </select>
-      <select class="select select-primary w-full max-w-xs">
+      <select class="select select-primary w-full max-w-xs" id="state"></select>
+      <select
+        class="select select-primary w-full max-w-xs"
+        id="district"
+      ></select>
+      <select class="select select-primary w-full max-w-xs" id="bloodType">
         <option disabled selected>Blood Type</option>
-        <option>A</option>
-        <option>A+</option>
-        <option>A-</option>
-        <option>B</option>
-        <option>B+</option>
-        <option>B-</option>
-        <option>O</option>
-        <option>O+</option>
-        <option>O-</option>
-        <option>AB</option>
-        <option>AB+</option>
-        <option>AB-</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
       </select>
-      <button class="btn btn-primary w-full max-w-xs">Search</button>
+      <button class="btn btn-primary w-full max-w-xs" id="btnSearch">
+        Search
+      </button>
     </div>
-    <div class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3 m-2">
-      <div class="card glass">
-        <figure>
-          <img src="/images/profile-male.svg" class="w-3/4" alt="car!" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Donor ID : 001</h2>
-          <p>Blood type: A</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary btn-block">
-              Call to local Admin
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="card glass">
-        <figure>
-          <img src="/images/profile-female.svg" class="w-3/4" alt="car!" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Donor ID : 002</h2>
-          <p>Blood type: B</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary btn-block">
-              Call to local Admin
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="card glass">
-        <figure>
-          <img src="/images/profile-male.svg" class="w-3/4" alt="car!" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Donor ID : 003</h2>
-          <p>Blood type: O</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary btn-block">
-              Call to local Admin
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="card glass">
-        <figure>
-          <img src="/images/profile-female.svg" class="w-3/4" alt="car!" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Donor ID : 004</h2>
-          <p>Blood type: O+</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary btn-block">
-              Call to local Admin
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="card glass">
-        <figure>
-          <img src="/images/profile-male.svg" class="w-3/4" alt="car!" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Donor ID : 005</h2>
-          <p>Blood type: AB</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary btn-block">
-              Call to local Admin
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="card glass">
-        <figure>
-          <img src="/images/profile-female.svg" class="w-3/4" alt="car!" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Donor ID : 006</h2>
-          <p>Blood type: B+</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary btn-block">
-              Call to local Admin
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div
+      class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3 m-2"
+      id="donorList"
+    ></div>
   </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    var regions = [<%- locations %>];
+    console.log(regions);
+      addOptions('state', regions);
+      $("#state").on('change', function(){
+          var cities = $.grep( regions, function( n, i ) {
+            return n.state == $("#state").val();
+          });
+          addOptions('district', cities);
+      });
+
+      function addOptions(id, arr){
+          $("#"+id).children().remove();
+          for(var idx in arr){
+              if(idx == 0) $("#"+id).append(new Option('Select '+id, ''));
+              if(idx == 0 || arr[idx][id] != arr[idx-1][id]){
+                  $("#"+id).append(new Option(arr[idx][id], arr[idx][id]));
+              }
+          }
+      }
+
+      $("#btnSearch").click(function(){
+        const state = $("#state").val() || '';
+        const district = $("#district").val() || '';
+        const bloodType = $("#bloodType").val() || '';
+        if(state != "" && district != "" && bloodType != ""){
+          const data = {state:state,district:district,bloodType:bloodType}
+          $.ajax("/donorSearch", {
+                type: "POST",
+                data: data,
+                success: function (result) {
+                  if (result.status == false) {
+                    alert("Somethings was wrong");
+                  } else {
+                    $("#donorList").empty();
+                    for(var i = 0; i< result.donors.length;i++){
+                      let item = `<div class="card glass">
+                                    <figure>
+                                      ${result.donors[i].gender == 'male'? '<img src="/images/profile-male.svg" class="w-3/4" alt="car!" />':'<img src="/images/profile-female.svg" class="w-3/4" alt="car!" />'}
+
+                                    </figure>
+                                    <div class="card-body">
+                                      <h2 class="card-title text-lg">ID : ${result.donors[i].code}</h2>
+                                      <p>Blood type:  ${result.donors[i].bloodType}</p>
+                                      <div class="card-actions justify-end">
+                                        <button class="btn btn-primary btn-block">
+                                          Call to local Admin
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>`
+                      $("#donorList").append(item)
+                    }
+
+                  }
+                },
+              });
+        }else{
+          alert("Please select all fields");
+        }
+
+      })
+  </script>
 </html>

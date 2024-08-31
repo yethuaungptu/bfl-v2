@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const Admin = require("../models/Admin");
 const Donor = require("../models/Donor");
+const Location = require("../models/Location");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -29,8 +30,13 @@ router.post("/login", async function (req, res) {
   }
 });
 
-router.get("/search", function (req, res, next) {
-  res.render("search");
+router.get("/search", async function (req, res, next) {
+  const locations = await Location.find(
+    { state: "Ayeyarwady" },
+    { state: 1, _id: 0, district: 1 }
+  );
+  console.log(locations);
+  res.render("search", { locations: locations });
 });
 
 router.get("/aboutus", function (req, res, next) {
@@ -70,6 +76,24 @@ router.post("/alogin", async function (req, res) {
     } else {
       res.redirect("/alogin");
     }
+  }
+});
+
+router.post("/donorSearch", async function (req, res) {
+  try {
+    console.log(req.body);
+    const donors = await Donor.find({
+      status: true,
+      isDonorInfoComplete: true,
+      donationStatus: true,
+      userStatus: true,
+      state: req.body.state,
+      district: req.body.district,
+      bloodType: req.body.bloodType,
+    });
+    res.json({ status: true, donors: donors });
+  } catch (e) {
+    res.josn({ status: false });
   }
 });
 
