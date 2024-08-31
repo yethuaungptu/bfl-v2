@@ -12,12 +12,31 @@ const checkAdmin = function (req, res, next) {
   }
 };
 router.get("/", checkAdmin, async function (req, res, next) {
-  const activeDonor = await Donor.aggregate([
+  const totalDonor = await Donor.aggregate([
     { $match: { status: true, isDonorInfoComplete: true } },
     { $group: { _id: "$bloodType", count: { $sum: 1 } } },
   ]);
-  console.log(activeDonor);
-  res.render("admin/index");
+  const totalDonorCount = await Donor.countDocuments({
+    status: true,
+    isDonorInfoComplete: true,
+  });
+  const activeDonor = await Donor.aggregate([
+    {
+      $match: { status: true, isDonorInfoComplete: true, donationStatus: true },
+    },
+    { $group: { _id: "$bloodType", count: { $sum: 1 } } },
+  ]);
+  const activeDonorCount = await Donor.countDocuments({
+    status: true,
+    isDonorInfoComplete: true,
+    donationStatus: true,
+  });
+  res.render("admin/index", {
+    totalDonor: totalDonor,
+    totalDonorCount: totalDonorCount,
+    activeDonor: activeDonor,
+    activeDonorCount: activeDonorCount,
+  });
 });
 
 router.get("/pendingDonor", checkAdmin, async function (req, res, next) {

@@ -16,13 +16,13 @@
           <tr>
             <th>Name</th>
             <th>ID</th>
-            <th>A</th>
+            <th>A+</th>
             <th>A-</th>
-            <th>B</th>
+            <th>B+</th>
             <th>B-</th>
-            <th>AB</th>
+            <th>AB+</th>
             <th>AB-</th>
-            <th>O</th>
+            <th>O+</th>
             <th>O-</th>
             <th>Action</th>
           </tr>
@@ -32,14 +32,14 @@
           <tr>
             <td><%= donors[i].name %></td>
             <td><%= donors[i].code %></td>
-            <td><%= donors[i].bloodType == "A" ? "A":"" %></td>
+            <td><%= donors[i].bloodType == "A+" ? "A+":"" %></td>
             <td><%= donors[i].bloodType == "A-" ? "A-":"" %></td>
-            <td><%= donors[i].bloodType == "B" ? "B":"" %></td>
+            <td><%= donors[i].bloodType == "B+" ? "B+":"" %></td>
             <td><%= donors[i].bloodType == "B-" ? "B-":"" %></td>
-            <td><%= donors[i].bloodType == "AB" ? "AB":"" %></td>
+            <td><%= donors[i].bloodType == "AB+" ? "AB+":"" %></td>
             <td><%= donors[i].bloodType == "AB-" ? "AB-":"" %></td>
-            <td><%= donors[i].bloodType == "O" ? "O":"" %></td>
-            <td><%= donors[i].bloodType == "O-" ? "O":"" %></td>
+            <td><%= donors[i].bloodType == "O+" ? "O+":"" %></td>
+            <td><%= donors[i].bloodType == "O-" ? "O-":"" %></td>
             <td>
               <a
                 href="/admin/donordetail/<%= donors[i]._id %>"
@@ -54,13 +54,13 @@
           <tr>
             <th>Name</th>
             <th>ID</th>
-            <th>A</th>
+            <th>A+</th>
             <th>A-</th>
-            <th>B</th>
+            <th>B+</th>
             <th>B-</th>
-            <th>AB</th>
+            <th>AB+</th>
             <th>AB-</th>
-            <th>O</th>
+            <th>O+</th>
             <th>O-</th>
             <th>Action</th>
           </tr>
