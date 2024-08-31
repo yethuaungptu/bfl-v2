@@ -87,7 +87,7 @@
         <div class="card-body">
           <div class="card-title block mx-auto">Your informarion</div>
           <form>
-            <input type="hidden" name="id" id="id" value="<%= donor._id %>" />
+            <!-- <input type="hidden" name="id" id="id" value="<%= donor._id %>" /> -->
             <label class="input input-bordered flex items-center gap-2 my-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -195,6 +195,24 @@
                 id="weight"
                 placeholder="Weight (lbs)"
                 value="<%= donor.weight? donor.weight:'' %>"
+              />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 my-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+              >
+              <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+              <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+              </svg>
+              <input
+                type="number"
+                name="age"
+                class="grow"
+                id="age"
+                placeholder="Age"
               />
             </label>
             <label class="input input-bordered flex items-center gap-2 my-2">
@@ -365,6 +383,7 @@
       const bloodType = $("#bloodType").val() || "";
       const weight = $("#weight").val();
       const gender = $("#gender").val();
+      const age = $("#age").val();
       const lastDonation = $("#lastDonation").val() || "";
       const nrc = $("#nrc").val();
       if (
@@ -373,9 +392,11 @@
         bloodType != "" &&
         weight != "" &&
         gender != "" &&
-        nrc != ""
+        nrc != "" &&
+        age != ""
       ) {
-        const data = {
+        
+         const data = {
           name: name,
           phone: phone,
           bloodType: bloodType,
@@ -383,6 +404,8 @@
           gender: gender,
           lastDonation: lastDonation,
           nrc: nrc,
+          age:age,
+          id: $("#id").val()
         };
         $.ajax("/donor/checkInfo", {
           type: "POST",

@@ -11,7 +11,12 @@ const checkAdmin = function (req, res, next) {
     res.redirect("/alogin");
   }
 };
-router.get("/", checkAdmin, function (req, res, next) {
+router.get("/", checkAdmin, async function (req, res, next) {
+  const activeDonor = await Donor.aggregate([
+    { $match: { status: true, isDonorInfoComplete: true } },
+    { $group: { _id: "$bloodType", count: { $sum: 1 } } },
+  ]);
+  console.log(activeDonor);
   res.render("admin/index");
 });
 
@@ -20,12 +25,13 @@ router.get("/pendingDonor", checkAdmin, async function (req, res, next) {
     isDonorInfoComplete: false,
     state: req.session.admin.state,
     district: req.session.admin.district,
+    status: true,
   });
   res.render("admin/pendingDonor", { donors: donors });
 });
 
 router.post("/pendingDonorCheck", checkAdmin, async function (req, res) {
-  const donor = await Donor.findOne({ email: req.body.email });
+  const donor = await Donor.findOne({ email: req.body.email, status: true });
   if (donor != null) res.json({ status: false });
   else res.json({ status: true });
 });
@@ -33,10 +39,23 @@ router.post("/pendingDonorCheck", checkAdmin, async function (req, res) {
 router.post("/pendingDonorAdd", checkAdmin, async function (req, res) {
   try {
     const donor = new Donor();
+    const donorCount = await Donor.countDocuments();
+    const codeStr =
+      "BFL-" +
+      (donorCount < 10
+        ? "000"
+        : donorCount < 100
+        ? "00"
+        : donorCount < 1000
+        ? "0"
+        : "") +
+      Number(donorCount + 1);
     donor.name = req.body.name;
+    donor.code = codeStr;
     donor.email = req.body.email;
     donor.password = req.body.password;
     donor.phone = req.body.phone;
+    donor.age = req.body.age;
     donor.state = req.session.admin.state;
     donor.district = req.session.admin.district;
     const data = await donor.save();
@@ -62,16 +81,22 @@ router.post("/pendingDonorUpdate", checkAdmin, async function (req, res) {
 });
 
 router.get("/pendingDonorDelete/:id", checkAdmin, async function (req, res) {
-  const data = await Donor.findOneAndDelete(req.params.id);
+  const data = await Donor.findOneAndUpdate(req.params.id, { status: false });
   res.redirect("/admin/pendingDonor");
 });
 
-router.get("/donor", checkAdmin, function (req, res) {
-  res.render("admin/donor");
+router.get("/donor", checkAdmin, async function (req, res) {
+  const donors = await Donor.find({
+    donationStatus: true,
+    isDonorInfoComplete: true,
+    status: true,
+  });
+  res.render("admin/donor", { donors: donors });
 });
 
-router.get("/donordetail/:id", checkAdmin, function (req, res) {
-  res.render("admin/donordetail");
+router.get("/donordetail/:id", checkAdmin, async function (req, res) {
+  const donor = await Donor.findById(req.params.id);
+  res.render("admin/donordetail", { donor: donor });
 });
 
 router.get("/changepwd", checkAdmin, function (req, res) {

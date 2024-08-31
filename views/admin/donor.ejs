@@ -28,91 +28,27 @@
           </tr>
         </thead>
         <tbody>
+          <% for(var i = 0; i < donors.length;i++){%>
           <tr>
-            <td>Mg Moe</td>
-            <td>001</td>
-            <td>A</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><%= donors[i].name %></td>
+            <td><%= donors[i].code %></td>
+            <td><%= donors[i].bloodType == "A" ? "A":"" %></td>
+            <td><%= donors[i].bloodType == "A-" ? "A-":"" %></td>
+            <td><%= donors[i].bloodType == "B" ? "B":"" %></td>
+            <td><%= donors[i].bloodType == "B-" ? "B-":"" %></td>
+            <td><%= donors[i].bloodType == "AB" ? "AB":"" %></td>
+            <td><%= donors[i].bloodType == "AB-" ? "AB-":"" %></td>
+            <td><%= donors[i].bloodType == "O" ? "O":"" %></td>
+            <td><%= donors[i].bloodType == "O-" ? "O":"" %></td>
             <td>
-              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
+              <a
+                href="/admin/donordetail/<%= donors[i]._id %>"
+                class="btn btn-primary btn-sm"
                 >Detail</a
               >
             </td>
           </tr>
-          <tr>
-            <td>Mg Toe</td>
-            <td>002</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>B-</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
-                >Detail</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Mg Poe</td>
-            <td>003</td>
-            <td>A</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
-                >Detail</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Mg Soe</td>
-            <td>004</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>AB-</td>
-            <td></td>
-            <td></td>
-            <td>
-              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
-                >Detail</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Mg Lin</td>
-            <td>005</td>
-            <td>A</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <a href="/admin/donordetail/123" class="btn btn-primary btn-sm"
-                >Detail</a
-              >
-            </td>
-          </tr>
+          <%}%>
         </tbody>
         <tfoot>
           <tr>

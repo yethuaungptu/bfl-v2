@@ -11,31 +11,45 @@
     <h1 class="text-center text-2xl font-bold my-5">Donor Detail</h1>
     <div class="card lg:card-side bg-base-100 shadow-xl m-5">
       <figure>
+        <% if(donor.gender == "male"){%>
         <img
-          src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
+          src="/images/profile-male.svg"
           alt="Album"
+          class="rounded-xl w-96"
         />
+        <%}else{%>
+        <img
+          src="/images/profile-female.svg"
+          alt="Album"
+          class="rounded-xl w-96"
+        />
+        <%}%>
       </figure>
       <div class="card-body">
-        <h2 class="card-title my-3">
-          Mg Moe <small class="font-light">(Not Avaliable by donor)</small>
+        <h2 class="font-bold mx-auto text-success text-2xl my-5">
+          <%= donor.name %> <% if(!donor.userStatus){%><small class="font-light"
+            >(Not Avaliable by donor)</small
+          >
+          <%}%>
         </h2>
         <div
           class="grid lg:grid-cols-2 md:rid-cols-2 sm:grid-cols-1 font-bold gap-5"
         >
-          <p>Blood Type : A</p>
-          <p>Gender : Male</p>
-          <p>Age : 22</p>
-          <p>Weight : 110 Lbs</p>
+          <p>Blood Type : <%= donor.bloodType %></p>
+          <p>Gender : <%= donor.gender %></p>
+          <p>Age : <%= donor.age %></p>
+          <p>Weight : <%= donor.weight %> Lbs</p>
         </div>
         <hr />
         <div
           class="grid lg:grid-cols-2 md:rid-cols-2 sm:grid-cols-1 font-bold gap-5"
         >
-          <p>Phone : 09777888771</p>
-          <p>Address : Pathein</p>
-          <p>Email : moe@gmail.com</p>
-          <p>Last Donation : 12/2/2024</p>
+          <p>Phone : <%= donor.phone %></p>
+          <p>Code : <%= donor.code %></p>
+          <p>Email : <%= donor.email %></p>
+          <p>
+            Last Donation : <%= new Date(donor.lastDonation).toUTCString() %>
+          </p>
         </div>
         <div class="card-actions justify-end my-3">
           <a class="btn btn-info">Donate Today</a>

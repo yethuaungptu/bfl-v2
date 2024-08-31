@@ -11,6 +11,10 @@ const DonorSchema = new Schema({
     type: String,
     required: true,
   },
+  code: {
+    type: String,
+    required: true,
+  },
   password: {
     type: String,
     required: true,
@@ -33,6 +37,9 @@ const DonorSchema = new Schema({
   weight: {
     type: Number,
   },
+  age: {
+    type: Number,
+  },
   gender: {
     type: String,
   },
@@ -53,6 +60,10 @@ const DonorSchema = new Schema({
   isDonorInfoComplete: {
     type: Boolean,
     default: false,
+  },
+  status: {
+    type: Boolean,
+    default: true,
   },
 });
 

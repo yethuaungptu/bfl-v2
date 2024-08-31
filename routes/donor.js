@@ -31,6 +31,7 @@ router.get("/profile", checkDonor, async function (req, res) {
 
 router.post("/checkInfo", checkDonor, async function (req, res) {
   const mobileValidate = Validator(req.body.phone);
+  console.log(req.body.nrc);
   const nrcValidate = mmNric.validateNricFormat(req.body.nrc);
   if (!mobileValidate) {
     res.json({ status: false, msg: "Mobile validation fail" });
@@ -42,7 +43,10 @@ router.post("/checkInfo", checkDonor, async function (req, res) {
       msg: "Weight must be between 100 and 350 pound",
     });
   } else {
-    const donor = await Donor.findOne({ nrc: req.body.nrc });
+    const donor = await Donor.findOne({
+      nrc: req.body.nrc,
+      _id: { $ne: req.body.id },
+    });
     if (donor != null) res.json({ status: false, msg: "NRC is duplicated" });
     else res.json({ status: true });
   }
@@ -57,6 +61,7 @@ router.post("/updateInfo", checkDonor, async function (req, res) {
       weight: req.body.weight,
       gender: req.body.gender,
       nrc: req.body.nrc,
+      age: req.body.age,
       isDonorInfoComplete: true,
     };
     if (req.body.lastDonation) update.lastDonation = req.body.lastDonation;
@@ -109,6 +114,12 @@ router.post("/changeEditMode", checkDonor, async function (req, res) {
   } catch (e) {
     res.json({ status: false, msg: "Somethings was wrong!" });
   }
+});
+
+router.get("/logout", checkDonor, async function (req, res) {
+  req.session.destroy(function () {
+    res.redirect("/");
+  });
 });
 
 module.exports = router;
