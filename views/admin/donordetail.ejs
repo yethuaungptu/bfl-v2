@@ -27,7 +27,8 @@
       </figure>
       <div class="card-body">
         <h2 class="font-bold mx-auto text-success text-2xl my-5">
-          <%= donor.name %> <% if(!donor.userStatus){%><small class="font-light"
+          <%= donor.name %> <% if(!donor.userStatus){%><small
+            class="font-light text-error"
             >(Not Avaliable by donor)</small
           >
           <%}%>
@@ -52,11 +53,69 @@
           </p>
         </div>
         <div class="card-actions justify-end my-3">
-          <a class="btn btn-info">Donate Today</a>
-          <a class="btn btn-secondary">Sent Alert Mail</a>
-          <a class="btn btn-primary" href="tel:+959777111437">Call to donor</a>
+          <button class="btn btn-info" <%= (!donor.userStatus || !donor.donationStatus)? 'disabled':'' %>  onclick="donateToday()">
+            Donate Today
+          </button>
+          <button class="btn btn-secondary" onclick="sendAlert()" id="sentBtn">Sent Alert Mail</button>
+          <a class="btn btn-primary" href="tel:<%=donor.phone%>"
+            >Call to donor</a
+          >
         </div>
       </div>
     </div>
   </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/sweetalert2@11.js"></script>
+  <script>
+    function donateToday() {
+      Swal.fire({
+        title: "Is donor donate today?",
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          const data = {id:'<%= donor._id %>'}
+          $.ajax("/admin/donateToday", {
+            type: "POST",
+            data: data,
+            success: function (result) {
+              if (result.status == false) {
+                Swal.fire("Somethings was wrong", "", "info");
+              } else {
+                Swal.fire("Saved!", "", "success").then(()=>{
+                  location.reload();
+                });
+              }
+            },
+          });
+        }
+      });
+    }
+    function sendAlert(){
+      Swal.fire({
+        title: "Are you sure for sent mail?",
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          const data = {email:'<%= donor.email %>'}
+          $.ajax("/admin/sentDonorAlert", {
+            type: "POST",
+            data: data,
+            success: function (result) {
+              if (result.status == false) {
+                Swal.fire("Somethings was wrong", "", "info");
+              } else {
+                Swal.fire("Sent!", "", "success").then(()=>{
+                $("#sentBtn").attr("disabled","disabled");
+                });
+              }
+            },
+          });
+        }
+      });
+    }
+  </script>
 </html>

@@ -1811,6 +1811,12 @@ html {
     --tw-bg-opacity: 1;
     background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
   }
+
+  .table-zebra tr.hover:hover,
+  .table-zebra tr.hover:nth-child(even):hover {
+    --tw-bg-opacity: 1;
+    background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
+  }
 }
 
 .btn {
@@ -2772,6 +2778,11 @@ html {
   right: 0px;
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+
+.table-zebra tbody tr:nth-child(even) :where(.table-pin-cols tr th) {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
 }
 
 .btm-nav > *.disabled,
@@ -3875,6 +3886,13 @@ details.collapse summary::-webkit-details-marker {
   background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
 }
 
+.table-zebra tr.active,
+    .table-zebra tr.active:nth-child(even),
+    .table-zebra-zebra tbody tr:nth-child(even) {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
+}
+
 .table :where(thead tr, tbody tr:not(:last-child), tbody tr:first-child:last-child) {
   border-bottom-width: 1px;
   --tw-border-opacity: 1;
@@ -4304,6 +4322,10 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 1.75rem;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .ms-20 {
   margin-inline-start: 5rem;
 }
@@ -4424,24 +4446,20 @@ html:has(.drawer-toggle:checked) {
   width: 1.5rem;
 }
 
-.w-80 {
-  width: 20rem;
-}
-
-.w-full {
-  width: 100%;
-}
-
 .w-64 {
   width: 16rem;
 }
 
-.w-72 {
-  width: 18rem;
+.w-80 {
+  width: 20rem;
 }
 
 .w-96 {
   width: 24rem;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .max-w-xs {
@@ -4630,6 +4648,10 @@ html:has(.drawer-toggle:checked) {
   stroke: currentColor;
 }
 
+.stroke-info {
+  stroke: var(--fallback-in,oklch(var(--in)/1));
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
@@ -4744,6 +4766,11 @@ html:has(.drawer-toggle:checked) {
 .text-base-content {
   --tw-text-opacity: 1;
   color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+}
+
+.text-error {
+  --tw-text-opacity: 1;
+  color: var(--fallback-er,oklch(var(--er)/var(--tw-text-opacity)));
 }
 
 .text-red-600 {

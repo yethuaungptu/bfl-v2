@@ -3,10 +3,29 @@ var router = express.Router();
 const Admin = require("../models/Admin");
 const Donor = require("../models/Donor");
 const Location = require("../models/Location");
+const History = require("../models/History");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index");
+router.get("/", async function (req, res, next) {
+  const topDonors = await History.aggregate([
+    {
+      $group: {
+        _id: "$donorId",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $lookup: {
+        from: "donors",
+        localField: "_id",
+        foreignField: "_id",
+        as: "donor",
+      },
+    },
+    { $limit: 10 },
+  ]);
+  console.log(topDonors);
+  res.render("index", { topDonors: topDonors });
 });
 
 router.get("/login", function (req, res, next) {
@@ -15,6 +34,7 @@ router.get("/login", function (req, res, next) {
 
 router.post("/login", async function (req, res) {
   const donor = await Donor.findOne({ email: req.body.email });
+
   if (donor != null && Donor.compare(req.body.password, donor.password)) {
     req.session.donor = {
       id: donor.id,

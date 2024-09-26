@@ -19,6 +19,8 @@
     "mongoose": "^8.5.3",
     "morgan": "~1.9.1",
     "myanmar-mobile-validator": "^1.2.3",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.15",
     "workbox-webpack-plugin": "^7.1.0"
   },
   "devDependencies": {

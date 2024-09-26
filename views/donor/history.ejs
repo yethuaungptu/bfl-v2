@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor Home</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/donor_drawer %>
+    <h1 class="text-center text-2xl m-5">Your Donation History</h1>
+    <div class="overflow-x-auto mx-2 lg:mx-10 my-5">
+      <table class="table table-zebra">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i =0; i < lists.length;i++){%>
+          <tr>
+            <th><%= i+1 %></th>
+            <td><%= lists[i].donationDate.toISOString().slice(0, 10) %></td>
+            <td><%= lists[i].state %></td>
+            <td><%= lists[i].district %></td>
+            <td><%= lists[i].remark %></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

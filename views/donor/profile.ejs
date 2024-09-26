@@ -11,7 +11,7 @@
     if(locals.donor.isDonorInfoComplete){%>
     <h1 class="text-center text-2xl m-5">Your Profile</h1>
     <div
-      class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mx-2 lg:mx-10"
+      class="grid lg:grid-cols-4 md:grid-cols-1 sm:grid-cols-1 mx-2 lg:mx-10 mb-5"
     >
       <div></div>
       <div class="col-span-2">
@@ -43,19 +43,21 @@
               <p class="font-semibold">Blood Type : <%= donor.bloodType %></p>
               <p class="font-semibold">Weight : <%= donor.weight %> lbs</p>
               <p class="font-semibold">Gender : <%= donor.gender %></p>
+              <p class="font-semibold">Age : <%= donor.age %></p>
+              <p class="font-semibold">LastDonation : <%= donor.lastDonation ? donor.lastDonation.toISOString().slice(0, 10) : ''; %></p>
               <p class="font-semibold">NRC : <%= donor.nrc %></p>
               <p class="font-semibold">
                 Donation Status : <% if(donor.donationStatus == true){%>
-                <span class="bg-success p-1">Avaliable</span>
+                <span class="bg-success p-1 rounded">Avaliable</span>
                 <%}else{%>
-                <span class="bg-error p-1">Not Avaliable</span>
+                <span class="bg-error p-1 rounded">Not Avaliable</span>
                 <%}%>
               </p>
               <p class="font-semibold">
                 User Status : <% if(donor.userStatus == true){%>
-                <span class="bg-success p-1">Avaliable</span>
+                <span class="bg-success p-1 rounded">Avaliable</span>
                 <%}else{%>
-                <span class="bg-error p-1">Not Avaliable</span>
+                <span class="bg-error p-1 rounded">Not Avaliable</span>
                 <%}%>
               </p>
             </div>
@@ -67,10 +69,13 @@
                 class="btn btn-secondary"
                 onclick="changeStatus('<%= !donor.userStatus %>')"
               >
-                Change User Status
+                Change Status
               </button>
               <button class="btn btn-accent" onclick="changeEditMode()">
-                Edit Your Profile
+                Edit Profile
+              </button>
+              <button class="btn btn-info" onclick="changeLocation.showModal()">
+                Edit Location
               </button>
             </div>
           </div>
@@ -212,7 +217,11 @@
                 name="age"
                 class="grow"
                 id="age"
-                placeholder="Age"
+                <% if(donor.age ){%>
+                  value = '<%= donor.age %>'
+                <%}else{%>
+                  placeholder = 'Age'
+                <%}%>
               />
             </label>
             <label class="input input-bordered flex items-center gap-2 my-2">
@@ -348,9 +357,71 @@
         <button>close</button>
       </form>
     </dialog>
+    <dialog id="changeLocation" class="modal">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold text-center">Change Location</h3>
+        <form>
+          <!-- <input type="hidden" name="id" id="id" value="<%= donor._id %>" /> -->
+          <select
+              class="select select-primary w-full my-2"
+              id="state"
+              name="state"
+            ></select>
+            <select
+              class="select select-primary w-full my-2"
+              id="district"
+              name="district"
+            ></select>
+          <button
+            class="btn btn-primary block mx-auto"
+            id="btnChange"
+            type="button"
+          >
+            Change Location
+          </button>
+        </form>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
   <script>
+    var regions = [<%- locations %>];
+    console.log(regions);
+      addOptions('state', regions);
+      $("#state").on('change', function(){
+          var cities = $.grep( regions, function( n, i ) {
+            return n.state == $("#state").val();
+          });
+          addOptions('district', cities);
+      });
+
+      function addOptions(id, arr){
+          $("#"+id).children().remove();
+          for(var idx in arr){
+              if(idx == 0) $("#"+id).append(new Option('Select '+id, ''));
+              if(idx == 0 || arr[idx][id] != arr[idx-1][id]){
+                  $("#"+id).append(new Option(arr[idx][id], arr[idx][id]));
+              }
+          }
+      }
+      $(function(){
+        $("#state").val("<%= donor.state %>");
+        var cities = $.grep( regions, function( n, i ) {
+            return n.state == $("#state").val();
+          });
+          addOptions('district', cities);
+        $("#district").val("<%= donor.district %>")
+      })
+    const lastDonation = '<%= donor.lastDonation %>'
+    if(lastDonation){
+      const d = new Date(lastDonation);
+      $("#lastDonation").val(d.toISOString().slice(0, 10))
+      // document.getElementById("lastDonation").defaultValue =d.toISOString().slice(0, 10);
+      $("#lastDonation").attr("readonly","readonly");
+    }
     function changeEditMode() {
       $.ajax("/donor/changeEditMode", {
         type: "POST",
@@ -377,6 +448,20 @@
         },
       });
     }
+    $("#btnChange").click(function(){
+      console.log("call");
+      $.ajax("/donor/changeLocation", {
+        type: "POST",
+        data: {state:$("#state").val(),district:$("#district").val()},
+        success: function (result) {
+          if (result.status == false) {
+            alert(result.msg);
+          } else {
+            location.href = "/donor/profile";
+          }
+        },
+      });
+    })
     $("#btnAdd").click(function () {
       const name = $("#name").val();
       const phone = $("#phone").val();

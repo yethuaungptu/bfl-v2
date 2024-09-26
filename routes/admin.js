@@ -1,7 +1,17 @@
 var express = require("express");
 var bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 var router = express.Router();
 var Donor = require("../models/Donor");
+const History = require("../models/History");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "bflmyanmar.ptntu@gmail.com", // Your email
+    pass: "caze yiqc wpbo fqnm", // Your email password or app-specific password
+  },
+});
 
 /* GET users listing. */
 const checkAdmin = function (req, res, next) {
@@ -108,6 +118,8 @@ router.get("/donor", checkAdmin, async function (req, res) {
   const donors = await Donor.find({
     donationStatus: true,
     isDonorInfoComplete: true,
+    state: req.session.admin.state,
+    district: req.session.admin.district,
     status: true,
   });
   res.render("admin/donor", { donors: donors });
@@ -120,6 +132,48 @@ router.get("/donordetail/:id", checkAdmin, async function (req, res) {
 
 router.get("/changepwd", checkAdmin, function (req, res) {
   res.render("admin/changepwd");
+});
+
+router.post("/donateToday", checkAdmin, async function (req, res) {
+  try {
+    const history = new History();
+    history.state = req.session.admin.state;
+    history.district = req.session.admin.district;
+    history.donorId = req.body.id;
+    history.donationDate = Date.now();
+    history.remark = "Donation add by local admin";
+    const data = await Donor.findByIdAndUpdate(req.body.id, {
+      lastDonation: Date.now(),
+      donationStatus: false,
+    });
+    const historyData = await history.save();
+    res.json({ status: true });
+  } catch (error) {
+    res.json({ status: false });
+  }
+});
+
+router.post("/sentDonorAlert", checkAdmin, function (req, res) {
+  try {
+    res.json({ status: true });
+    const mailOptions = {
+      from: "bflmyanmar.ptntu@gmail.com",
+      to: req.body.email,
+      subject: "Alert Message from BFL myanmar",
+      html: "<p>Hello Donor, you pass 90days for last blood donation. Now, your donation status is avaliable but your donor status is not avaliable.If you are avalible for blood donation, please turn on status for avaliable. Some life need your blood</p><br><br><br><p>Best regards,</p><p><b>BFL myanmar team</b></p>",
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.json({ status: false });
+        return console.log("Error:", error);
+      }
+      console.log("Email sent:", info.response);
+    });
+  } catch (error) {
+    res.json({ status: false });
+  }
 });
 
 router.get("/logout", checkAdmin, function (req, res) {

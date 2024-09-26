@@ -22,6 +22,7 @@
                 type="text"
                 class="grow"
                 name="email"
+                id="email"
                 placeholder="test@gmail.com"
               />
             </label>
@@ -38,7 +39,7 @@
               <label class="cursor-pointer label">
                 <input
                   type="checkbox"
-                  checked="checked"
+                  id="rememberMe"
                   class="checkbox checkbox-info"
                 />
 
@@ -53,4 +54,19 @@
       </div>
     </div>
   </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/js.cookie.min.js"></script>
+  <script>
+    $("#rememberMe").click(function () {
+      if ($("#rememberMe").prop("checked")) {
+        Cookies.set("adminEmail", $("#email").val());
+      } else {
+        Cookies.remove("adminEmail");
+      }
+    });
+    if (Cookies.get("adminEmail")) {
+      $("#email").val(Cookies.get("adminEmail"));
+      $("#rememberMe").prop("checked", "true");
+    }
+  </script>
 </html>

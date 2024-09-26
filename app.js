@@ -5,11 +5,14 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var session = require("express-session");
 var mongoose = require("mongoose");
+const schedule = require("node-schedule");
 
 var indexRouter = require("./routes/index");
 var adminRouter = require("./routes/admin");
 var suAdminRouter = require("./routes/suadmin");
 var donorRouter = require("./routes/donor");
+
+const Donor = require("./models/Donor");
 
 var app = express();
 
@@ -34,6 +37,23 @@ app.use(
     saveUninitialized: true,
   })
 );
+async function checkingStatus() {
+  var d = new Date();
+  d.setDate(d.getDate() - 90);
+  const donors = await Donor.updateMany(
+    {
+      donationStatus: false,
+      lastDonation: { $lte: d },
+    },
+    { donationStatus: true }
+  );
+}
+
+schedule.scheduleJob("0 0 * * *", function () {
+  console.log("Task is running every day at 0:00 AM");
+  // Your task logic here
+  checkingStatus();
+});
 
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
