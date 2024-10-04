@@ -26,7 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-mongoose.connect("mongodb://127.0.0.1/bflv2db");
+// mongoose.connect("mongodb://127.0.0.1/bflv2db");
+mongoose.connect(
+  "mongodb+srv://bflmyanmar:bfl2024@bfl-v2.le4zw.mongodb.net/?retryWrites=true&w=majority&appName=bfl-v2"
+);
 const db = mongoose.connection;
 db.on("error", console.error.bind("mongodb connection error at dfldb"));
 
