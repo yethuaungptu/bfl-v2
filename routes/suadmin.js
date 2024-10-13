@@ -22,7 +22,7 @@ router.get("/admin", checkAdmin, async function (req, res, next) {
 });
 
 router.get("/adminAdd", checkAdmin, async function (req, res) {
-  const locations = await Location.find({ state: 1, _id: 0, district: 1 });
+  const locations = await Location.find({}, { state: 1, _id: 0, district: 1 });
   console.log(locations);
   res.render("suadmin/adminAdd", { locations: locations });
 });
@@ -66,10 +66,7 @@ router.get("/adminDetail/:id", checkAdmin, async function (req, res) {
 });
 
 router.get("/adminUpdate/:id", checkAdmin, async function (req, res) {
-  const locations = await Location.find(
-    { state: "Ayeyarwady" },
-    { state: 1, _id: 0, district: 1 }
-  );
+  const locations = await Location.find({}, { state: 1, _id: 0, district: 1 });
   const admin = await Admin.findById(req.params.id);
   console.log(locations);
   res.render("suadmin/adminUpdate", { locations: locations, admin: admin });

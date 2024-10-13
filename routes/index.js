@@ -51,7 +51,7 @@ router.post("/login", async function (req, res) {
 });
 
 router.get("/search", async function (req, res, next) {
-  const locations = await Location.find({ state: 1, _id: 0, district: 1 });
+  const locations = await Location.find({}, { state: 1, _id: 0, district: 1 });
   console.log(locations);
   res.render("search", { locations: locations });
 });
@@ -60,7 +60,16 @@ router.get("/aboutus", function (req, res, next) {
   res.render("aboutus");
 });
 
-router.get("/contactus", function (req, res, next) {
+router.get("/contactus", async function (req, res, next) {
+  const admin = await Admin.aggregate([
+    {
+      $match: { status: true },
+    },
+    {
+      $group: { _id: "$name", admin: { $push: "$$ROOT" } },
+    },
+  ]);
+  console.log("////", admin);
   res.render("contactus");
 });
 
