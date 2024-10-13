@@ -24,7 +24,11 @@ router.get("/", checkDonor, async function (req, res) {
     district: req.session.donor.district,
   });
   if (!admin) admin = { name: "Not avaliable", phone: "Not avaliable" };
-  res.render("donor/index", { admin: admin });
+  const location = await Location.findOne({
+    state: req.session.donor.state,
+    district: req.session.donor.district,
+  });
+  res.render("donor/index", { admin: admin, location: location });
 });
 
 router.get("/profile", checkDonor, async function (req, res) {
