@@ -23,16 +23,31 @@ const checkAdmin = function (req, res, next) {
 };
 router.get("/", checkAdmin, async function (req, res, next) {
   const totalDonor = await Donor.aggregate([
-    { $match: { status: true, isDonorInfoComplete: true } },
+    {
+      $match: {
+        status: true,
+        isDonorInfoComplete: true,
+        state: req.session.admin.state,
+        district: req.session.admin.district,
+      },
+    },
     { $group: { _id: "$bloodType", count: { $sum: 1 } } },
   ]);
   const totalDonorCount = await Donor.countDocuments({
     status: true,
     isDonorInfoComplete: true,
+    state: req.session.admin.state,
+    district: req.session.admin.district,
   });
   const activeDonor = await Donor.aggregate([
     {
-      $match: { status: true, isDonorInfoComplete: true, donationStatus: true },
+      $match: {
+        status: true,
+        isDonorInfoComplete: true,
+        donationStatus: true,
+        state: req.session.admin.state,
+        district: req.session.admin.district,
+      },
     },
     { $group: { _id: "$bloodType", count: { $sum: 1 } } },
   ]);
@@ -40,6 +55,8 @@ router.get("/", checkAdmin, async function (req, res, next) {
     status: true,
     isDonorInfoComplete: true,
     donationStatus: true,
+    state: req.session.admin.state,
+    district: req.session.admin.district,
   });
   res.render("admin/index", {
     totalDonor: totalDonor,

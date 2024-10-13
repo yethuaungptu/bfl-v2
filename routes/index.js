@@ -23,6 +23,7 @@ router.get("/", async function (req, res, next) {
       },
     },
     { $limit: 10 },
+    { $sort: { count: -1 } },
   ]);
   console.log(topDonors);
   res.render("index", { topDonors: topDonors });
@@ -61,16 +62,12 @@ router.get("/aboutus", function (req, res, next) {
 });
 
 router.get("/contactus", async function (req, res, next) {
-  const admin = await Admin.aggregate([
+  const admins = await Admin.aggregate([
     {
-      $match: { status: true },
-    },
-    {
-      $group: { _id: "$name", admin: { $push: "$$ROOT" } },
+      $group: { _id: "$state", admin: { $push: "$$ROOT" } },
     },
   ]);
-  console.log("////", admin);
-  res.render("contactus");
+  res.render("contactus", { admins: admins });
 });
 
 router.get("/alogin", function (req, res, next) {

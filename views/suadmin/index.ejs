@@ -15,19 +15,19 @@
       >
         <div class="stat">
           <div class="stat-title">Total Donation</div>
-          <div class="stat-value">3100</div>
-          <div class="stat-desc">Jan 1st - Feb 1st</div>
+          <div class="stat-value"><%= donationCount %></div>
+          <div class="stat-desc">All time</div>
         </div>
 
         <div class="stat">
           <div class="stat-title">Total Donors</div>
-          <div class="stat-value">420</div>
+          <div class="stat-value"><%= donorCount %></div>
           <div class="stat-desc">Active</div>
         </div>
 
         <div class="stat">
           <div class="stat-title">Total Admin</div>
-          <div class="stat-value">120</div>
+          <div class="stat-value"><%= adminCount %></div>
           <div class="stat-desc">Active</div>
         </div>
       </div>
@@ -51,39 +51,43 @@
           </tr>
         </thead>
         <tbody>
+          <% for(var i = 0; i < donors.length;i++){%>
           <tr>
-            <td>Pathein</td>
-            <td>3</td>
-            <td>4</td>
-            <td>20</td>
-            <td>16</td>
-            <td>9</td>
-            <td>11</td>
-            <td>13</td>
-            <td>2</td>
+            <td><%= donors[i]._id %></td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'A+'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'A-'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'B+'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'B-'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'AB+'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'AB-'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'O+'}).length %>
+            </td>
+            <td>
+              <%= donors[i].donor.filter((item)=> {return item.bloodType ==
+              'O-'}).length %>
+            </td>
           </tr>
-          <tr>
-            <td>Kyaunggon</td>
-            <td>13</td>
-            <td>24</td>
-            <td>2</td>
-            <td>1</td>
-            <td>39</td>
-            <td>21</td>
-            <td>23</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>Pantanaw</td>
-            <td>3</td>
-            <td>20</td>
-            <td>9</td>
-            <td>13</td>
-            <td>9</td>
-            <td>11</td>
-            <td>13</td>
-            <td>12</td>
-          </tr>
+          <%}%>
         </tbody>
         <tfoot>
           <tr>

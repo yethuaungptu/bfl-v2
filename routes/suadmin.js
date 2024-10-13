@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var Location = require("../models/Location");
+const History = require("../models/History");
+const Donor = require("../models/Donor");
 var Admin = require("../models/Admin");
 var bcrypt = require("bcryptjs");
 
@@ -12,8 +14,25 @@ const checkAdmin = function (req, res, next) {
     res.redirect("/alogin");
   }
 };
-router.get("/", checkAdmin, function (req, res, next) {
-  res.render("suadmin/index");
+router.get("/", async function (req, res, next) {
+  const donationCount = await History.countDocuments();
+  const donorCount = await Donor.countDocuments();
+  const adminCount = await Admin.countDocuments();
+  const donors = await Donor.aggregate([
+    {
+      $group: {
+        _id: "$district",
+        donor: { $push: "$$ROOT" },
+      },
+    },
+  ]);
+  console.log(donationCount, donorCount, adminCount, donors);
+  res.render("suadmin/index", {
+    donationCount: donationCount,
+    donorCount: donorCount,
+    adminCount: adminCount,
+    donors: donors,
+  });
 });
 
 router.get("/admin", checkAdmin, async function (req, res, next) {
