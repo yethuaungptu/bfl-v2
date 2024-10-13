@@ -51,10 +51,7 @@ router.post("/login", async function (req, res) {
 });
 
 router.get("/search", async function (req, res, next) {
-  const locations = await Location.find(
-    { state: "Ayeyarwady" },
-    { state: 1, _id: 0, district: 1 }
-  );
+  const locations = await Location.find({ state: 1, _id: 0, district: 1 });
   console.log(locations);
   res.render("search", { locations: locations });
 });

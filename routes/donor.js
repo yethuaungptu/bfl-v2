@@ -29,10 +29,7 @@ router.get("/", checkDonor, async function (req, res) {
 
 router.get("/profile", checkDonor, async function (req, res) {
   const donor = await Donor.findById(req.session.donor.id);
-  const locations = await Location.find(
-    { state: "Ayeyarwady" },
-    { state: 1, _id: 0, district: 1 }
-  );
+  const locations = await Location.find({ state: 1, _id: 0, district: 1 });
   res.render("donor/profile", { donor: donor, locations: locations });
 });
 
