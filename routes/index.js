@@ -114,7 +114,11 @@ router.post("/donorSearch", async function (req, res) {
       district: req.body.district,
       bloodType: req.body.bloodType,
     });
-    res.json({ status: true, donors: donors });
+    const admin = await Admin.findOne({
+      state: req.body.state,
+      district: req.body.district,
+    });
+    res.json({ status: true, donors: donors, admin: admin });
   } catch (e) {
     res.josn({ status: false });
   }
