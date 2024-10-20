@@ -56,7 +56,7 @@
           <button class="btn btn-info" <%= (!donor.userStatus || !donor.donationStatus)? 'disabled':'' %>  onclick="donateToday()">
             Donate Today
           </button>
-          <button class="btn btn-secondary" onclick="sendAlert()" id="sentBtn">Sent Alert Mail</button>
+          <button class="btn btn-secondary" <%= (!donor.userStatus && donor.donationStatus)? '':'disabled' %> onclick="sendAlert()" id="sentBtn">Sent Alert Mail</button>
           <a class="btn btn-primary" href="tel:<%=donor.phone%>"
             >Call to donor</a
           >
