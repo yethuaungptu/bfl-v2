@@ -415,12 +415,16 @@
           addOptions('district', cities);
         $("#district").val("<%= donor.district %>")
       })
-    const lastDonation = '<%= donor.lastDonation %>'
+    const lastDonation = '<%= donor.lastDonation %>';
+    const nrcId = '<%= donor.nrc %>';
     if(lastDonation){
       const d = new Date(lastDonation);
       $("#lastDonation").val(d.toISOString().slice(0, 10))
       // document.getElementById("lastDonation").defaultValue =d.toISOString().slice(0, 10);
       $("#lastDonation").attr("readonly","readonly");
+    }
+    if(nrcId){
+      $("#nrc").attr("readonly","readonly");
     }
     function changeEditMode() {
       $.ajax("/donor/changeEditMode", {
