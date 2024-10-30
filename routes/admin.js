@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer");
 var router = express.Router();
 var Donor = require("../models/Donor");
 const History = require("../models/History");
+var bcrypt = require("bcryptjs");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -21,6 +22,13 @@ const checkAdmin = function (req, res, next) {
     res.redirect("/alogin");
   }
 };
+function _calculateAge(birthday) {
+  // birthday is a date
+  var ageDifMs = Date.now() - birthday.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
 router.get("/", checkAdmin, async function (req, res, next) {
   const totalDonor = await Donor.aggregate([
     {
@@ -106,6 +114,21 @@ router.post("/pendingDonorAdd", checkAdmin, async function (req, res) {
     donor.district = req.session.admin.district;
     const data = await donor.save();
     res.json({ status: true });
+    const mailOptions = {
+      from: "bflmyanmar.ptntu@gmail.com",
+      to: req.body.email,
+      subject: "Vertification Alert Message from BFL myanmar",
+      html: "<p>Welcome Donor, you need to insert your information like blood type,last donation and other more.If you not fill your information within 30 days, we will permanently remove your account. </p><br><br><br><p>Best regards,</p><p><b>BFL myanmar team</b></p>",
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.json({ status: false });
+        return console.log("Error:", error);
+      }
+      console.log("Email sent:", info.response);
+    });
   } catch (e) {
     res.json({ status: false });
   }
@@ -133,7 +156,6 @@ router.get("/pendingDonorDelete/:id", checkAdmin, async function (req, res) {
 
 router.get("/donor", checkAdmin, async function (req, res) {
   const donors = await Donor.find({
-    donationStatus: true,
     isDonorInfoComplete: true,
     state: req.session.admin.state,
     district: req.session.admin.district,
@@ -191,6 +213,48 @@ router.post("/sentDonorAlert", checkAdmin, function (req, res) {
   } catch (error) {
     res.json({ status: false });
   }
+});
+
+router.post("/updateDonorPassword", checkAdmin, async function (req, res) {
+  try {
+    const data = await Donor.findByIdAndUpdate(req.body.id, {
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
+    });
+    res.json({ status: true });
+  } catch (e) {
+    console.log(e);
+    res.json({ status: false });
+  }
+});
+
+router.get("/availableDonor", checkAdmin, async function (req, res) {
+  console.log(req.query);
+  let query = {
+    userStatus: true,
+    donationStatus: true,
+    isDonorInfoComplete: true,
+    state: req.session.admin.state,
+    district: req.session.admin.district,
+    status: true,
+  };
+  if (req.query.bloodType) {
+    query.bloodType = req.query.bloodType.replace(" ", "+");
+  }
+  console.log(query);
+  const list = await Donor.find(query);
+  const donors = [];
+  for (var i = 0; i < list.length; i++) {
+    const count = await History.countDocuments({ donorId: list[i]._id });
+    donors.push({
+      name: list[i].name,
+      code: list[i].code,
+      age: _calculateAge(new Date(list[i].dob)),
+      bloodType: list[i].bloodType,
+      donationCount: count,
+      phone: list[i].phone,
+    });
+  }
+  res.render("admin/availableDonor", { donors: donors });
 });
 
 router.get("/logout", checkAdmin, function (req, res) {

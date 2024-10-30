@@ -43,9 +43,11 @@
               <p class="font-semibold">Blood Type : <%= donor.bloodType %></p>
               <p class="font-semibold">Weight : <%= donor.weight %> lbs</p>
               <p class="font-semibold">Gender : <%= donor.gender %></p>
-              <p class="font-semibold">Age : <%= donor.age %></p>
+              <p class="font-semibold">Age : <span id="ageVal"></span></p>
+              <p class="font-semibold">DOB : <%= donor.dob ? donor.dob.toISOString().slice(0, 10) : '';  %></p>
               <p class="font-semibold">LastDonation : <%= donor.lastDonation ? donor.lastDonation.toISOString().slice(0, 10) : ''; %></p>
               <p class="font-semibold">NRC : <%= donor.nrc %></p>
+              <p class="font-semibold">Joined : <%= donor.created ? donor.created.toISOString().slice(0, 10) : ''; %></p>
               <p class="font-semibold">
                 Donation Status : <% if(donor.donationStatus == true){%>
                 <span class="bg-success p-1 rounded">Avaliable</span>
@@ -203,25 +205,24 @@
               />
             </label>
             <label class="input input-bordered flex items-center gap-2 my-2">
+              <p class="bg-base-300 w-1/4 text-center p-3 -ms-2">Date Of Birth</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
                 class="h-4 w-4 opacity-70"
               >
-              <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-              <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                <path
+                  d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"
+                />
               </svg>
               <input
-                type="number"
-                name="age"
+                type="date"
                 class="grow"
-                id="age"
-                <% if(donor.age ){%>
-                  value = '<%= donor.age %>'
-                <%}else{%>
-                  placeholder = 'Age'
-                <%}%>
+                max="<%= new Date().toJSON().split('T')[0] %>"
+                name="dob"
+                id="dob"
+                placeholder="Date of birth"
               />
             </label>
             <label class="input input-bordered flex items-center gap-2 my-2">
@@ -390,6 +391,12 @@
   </body>
   <script src="/javascripts/jquery.min.js"></script>
   <script>
+    function _calculateAge(birthday) {
+      // birthday is a date
+      var ageDifMs = Date.now() - birthday.getTime();
+      var ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
     var regions = [<%- locations %>];
     console.log(regions);
       addOptions('state', regions);
@@ -419,6 +426,12 @@
       })
     const lastDonation = '<%= donor.lastDonation %>';
     const nrcId = '<%= donor.nrc %>';
+    const dob = '<%= donor.dob %>';
+    if(dob){
+      const age = _calculateAge(new Date(dob));
+      console.log(age);
+      $("#ageVal").html(age);
+    }
     if(lastDonation){
       const d = new Date(lastDonation);
       $("#lastDonation").val(d.toISOString().slice(0, 10))
@@ -474,7 +487,7 @@
       const bloodType = $("#bloodType").val() || "";
       const weight = $("#weight").val();
       const gender = $("#gender").val();
-      const age = $("#age").val();
+      const dob = $("#dob").val();
       const lastDonation = $("#lastDonation").val() || "";
       const nrc = $("#nrc").val();
       if (
@@ -484,7 +497,7 @@
         weight != "" &&
         gender != "" &&
         nrc != "" &&
-        age != ""
+        dob != ""
       ) {
         
          const data = {
@@ -495,7 +508,7 @@
           gender: gender,
           lastDonation: lastDonation,
           nrc: nrc,
-          age:age,
+          dob:dob,
           id: $("#id").val()
         };
         $.ajax("/donor/checkInfo", {

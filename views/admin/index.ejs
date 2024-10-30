@@ -18,88 +18,85 @@
           <div class="stat-value"><%= totalDonorCount %></div>
           <div class="stat-desc">At your area</div>
         </div>
-
+        <% if( totalDonor.filter((item)=> item._id == "A+").length > 0){%>
         <div class="stat">
           <div class="stat-title">A+</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "A+").length > 0 ?
             totalDonor.filter((item)=> item._id == "A+")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
-
+        <%}%> <% if(totalDonor.filter((item)=> item._id == "A-").length > 0){%>
         <div class="stat">
           <div class="stat-title">A-</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "A-").length > 0 ?
             totalDonor.filter((item)=> item._id == "A-")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
+        <%}%>
       </div>
     </div>
     <div class="mt-5 mx-2">
       <div
         class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
       >
+        <% if(totalDonor.filter((item)=> item._id == "B+").length > 0 ){%>
         <div class="stat">
           <div class="stat-title">B+</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "B+").length > 0 ?
             totalDonor.filter((item)=> item._id == "B+")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
-
+        <%}%> <% if(totalDonor.filter((item)=> item._id == "B-").length > 0){%>
         <div class="stat">
           <div class="stat-title">B-</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "B-").length > 0 ?
             totalDonor.filter((item)=> item._id == "B-")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
-
+        <%}%> <% if(totalDonor.filter((item)=> item._id == "AB+").length > 0){%>
         <div class="stat">
           <div class="stat-title">AB+</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "AB+").length > 0 ?
             totalDonor.filter((item)=> item._id == "AB+")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
+        <%}%>
       </div>
     </div>
     <div class="mt-5 mx-2">
       <div
         class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
       >
+        <% if(totalDonor.filter((item)=> item._id == "AB-").length > 0){%>
         <div class="stat">
           <div class="stat-title">AB-</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "AB-").length > 0 ?
             totalDonor.filter((item)=> item._id == "AB-")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
-
+        <%}%> <% if(totalDonor.filter((item)=> item._id == "O+").length > 0){%>
         <div class="stat">
           <div class="stat-title">O+</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "O+").length > 0 ?
             totalDonor.filter((item)=> item._id == "O+")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
-
+        <%}%> <% if(totalDonor.filter((item)=> item._id == "O-").length > 0){%>
         <div class="stat">
           <div class="stat-title">O-</div>
           <div class="stat-value">
             <%= totalDonor.filter((item)=> item._id == "O-").length > 0 ?
             totalDonor.filter((item)=> item._id == "O-")[0].count : 0 %>
           </div>
-          <div class="stat-desc">All</div>
         </div>
+        <%}%>
       </div>
     </div>
     <h1 class="text-center text-3xl font-bold my-5">Total Avaliable Donors</h1>
@@ -112,7 +109,7 @@
           <div class="stat-value"><%= activeDonorCount %></div>
           <div class="stat-desc">At your area</div>
         </div>
-
+        <% if(activeDonor.filter((item)=> item._id == "A+").length > 0){%>
         <div class="stat">
           <div class="stat-title">A+</div>
           <div class="stat-value">
@@ -121,7 +118,7 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
-
+        <%}%> <% if(activeDonor.filter((item)=> item._id == "A-").length > 0){%>
         <div class="stat">
           <div class="stat-title">A-</div>
           <div class="stat-value">
@@ -130,12 +127,14 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
+        <%}%>
       </div>
     </div>
     <div class="mt-5 mx-2">
       <div
         class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
       >
+        <% if(activeDonor.filter((item)=> item._id == "B+").length > 0){%>
         <div class="stat">
           <div class="stat-title">B+</div>
           <div class="stat-value">
@@ -144,7 +143,7 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
-
+        <%}%> <% if(activeDonor.filter((item)=> item._id == "B-").length > 0){%>
         <div class="stat">
           <div class="stat-title">B-</div>
           <div class="stat-value">
@@ -153,7 +152,8 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
-
+        <%}%> <% if(activeDonor.filter((item)=> item._id == "AB+").length >
+        0){%>
         <div class="stat">
           <div class="stat-title">AB+</div>
           <div class="stat-value">
@@ -162,12 +162,14 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
+        <%}%>
       </div>
     </div>
     <div class="mt-5 mx-2">
       <div
         class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
       >
+        <% if(activeDonor.filter((item)=> item._id == "AB-").length > 0){%>
         <div class="stat">
           <div class="stat-title">AB-</div>
           <div class="stat-value">
@@ -176,7 +178,7 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
-
+        <%}%> <% if(activeDonor.filter((item)=> item._id == "O+").length > 0){%>
         <div class="stat">
           <div class="stat-title">O+</div>
           <div class="stat-value">
@@ -185,7 +187,7 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
-
+        <%}%> <% if(activeDonor.filter((item)=> item._id == "O-").length > 0){%>
         <div class="stat">
           <div class="stat-title">O-</div>
           <div class="stat-value">
@@ -194,6 +196,7 @@
           </div>
           <div class="stat-desc">Active</div>
         </div>
+        <%}%>
       </div>
     </div>
   </body>

@@ -3657,6 +3657,10 @@ details.collapse summary::-webkit-details-marker {
   }
 }
 
+.select-bordered {
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+}
+
 .select:focus {
   box-shadow: none;
   border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
@@ -4322,6 +4326,10 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 1.75rem;
 }
 
+.-ms-2 {
+  margin-inline-start: -0.5rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
@@ -4412,6 +4420,10 @@ html:has(.drawer-toggle:checked) {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-1\/4 {
+  width: 25%;
 }
 
 .w-10 {

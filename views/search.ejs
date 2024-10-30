@@ -32,10 +32,14 @@
         Search
       </button>
     </div>
-    <div
+    <!-- <div
       class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 gap-3 m-2"
       id="donorList"
-    ></div>
+    ></div> -->
+    <div class="mx-auto grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1">
+      <div></div>
+      <div id="donorInfo"></div>
+    </div>
   </body>
   <script src="/javascripts/jquery.min.js"></script>
   <script>
@@ -72,26 +76,55 @@
                   if (result.status == false) {
                     alert("Somethings was wrong");
                   } else {
-                    $("#donorList").empty();
-                    for(var i = 0; i< result.donors.length;i++){
-                      let item = `<div class="card glass">
-                                    <figure>
-                                      ${result.donors[i].gender == 'male'? '<img src="/images/profile-male.svg" class="w-3/4" alt="car!" />':'<img src="/images/profile-female.svg" class="w-3/4" alt="car!" />'}
+                    console.log(result);
+                    // $("#donorList").empty();
+                    // for(var i = 0; i< result.donors.length;i++){
+                    //   let item = `<div class="card glass">
+                    //                 <figure>
+                    //                   ${result.donors[i].gender == 'male'? '<img src="/images/profile-male.svg" class="w-3/4" alt="car!" />':'<img src="/images/profile-female.svg" class="w-3/4" alt="car!" />'}
 
-                                    </figure>
-                                    <div class="card-body">
-                                      <h2 class="card-title text-lg">ID : ${result.donors[i].code}</h2>
-                                      <p>Blood type:  ${result.donors[i].bloodType}</p>
-                                      <div class="card-actions justify-end">
-                                        <a href="tel:${result.admin.phone}" class="btn btn-primary btn-block">
-                                          Call to local Admin
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>`
-                      $("#donorList").append(item)
+                    //                 </figure>
+                    //                 <div class="card-body">
+                    //                   <h2 class="card-title text-lg">ID : ${result.donors[i].code}</h2>
+                    //                   <p>Blood type:  ${result.donors[i].bloodType}</p>
+                    //                   <div class="card-actions justify-end">
+                    //                     <a href="tel:${result.admin.phone}" class="btn btn-primary btn-block">
+                    //                       Call to local Admin
+                    //                     </a>
+                    //                   </div>
+                    //                 </div>
+                    //               </div>`
+                    //   $("#donorList").append(item)
+                    // }
+                    $("#donorInfo").empty();
+                    if(result.donors.length > 0){
+                      $("#donorInfo").append(`<div class="card glass">
+          <div class="card-body">
+            <h2 class="text-center text-xl font-bold">Search Result</h2>
+            <div class="stats shadow">
+              <div class="stat">
+                <div class="stat-title">Blood Type</div>
+                <div class="stat-value">${bloodType}</div>
+              </div>
+            </div>
+            <div class="stats shadow">
+              <div class="stat">
+                <div class="stat-title">Avaliable Donor</div>
+                <div class="stat-value">${result.donors.length}</div>
+              </div>
+            </div>
+            <div class="stats shadow">
+              <div class="stat">
+                <div class="stat-title">Avaliable Percent of Donor (${bloodType})</div>
+                <div class="stat-value">${Math.floor(result.donors.length/result.allDonorCount)*100}%</div>
+              </div>
+            </div>
+            <div class="card-actions justify-end">
+              <a href="tel:${result.admin.phone}" class="btn btn-primary btn-block"> Call to local Admin </a>
+            </div>
+          </div>
+        </div>`)
                     }
-
                   }
                 },
               });

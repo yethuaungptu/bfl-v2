@@ -37,8 +37,8 @@ const DonorSchema = new Schema({
   weight: {
     type: Number,
   },
-  age: {
-    type: Number,
+  dob: {
+    type: Date,
   },
   gender: {
     type: String,
@@ -64,6 +64,10 @@ const DonorSchema = new Schema({
   status: {
     type: Boolean,
     default: true,
+  },
+  created: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

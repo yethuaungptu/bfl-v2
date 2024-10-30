@@ -69,9 +69,9 @@ router.post("/updateInfo", checkDonor, async function (req, res) {
       weight: req.body.weight,
       gender: req.body.gender,
       nrc: req.body.nrc,
-      age: req.body.age,
       isDonorInfoComplete: true,
     };
+    if (req.body.dob) update.dob = req.body.dob;
     const donor = await Donor.findById(req.session.donor.id);
     if (req.body.lastDonation && !donor.lastDonation) {
       update.lastDonation = req.body.lastDonation;

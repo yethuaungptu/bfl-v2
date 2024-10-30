@@ -51,11 +51,21 @@ async function checkingStatus() {
     { donationStatus: true }
   );
 }
+async function checkPendingDonor() {
+  var d = new Date();
+  d.setDate(d.getDate() - 30);
+  const donors = await Donor.deleteMany({
+    isDonorInfoComplete: false,
+    created: { $lte: d },
+  });
+  console.log(donors);
+}
 
 schedule.scheduleJob("0 0 * * *", function () {
   console.log("Task is running every day at 0:00 AM");
   // Your task logic here
   checkingStatus();
+  checkPendingDonor();
 });
 
 app.use("/", indexRouter);

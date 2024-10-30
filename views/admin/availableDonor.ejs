@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor List</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body class="min-h-screen">
+    <% include ../partial/admin_drawer %>
+    <h1 class="text-center text-2xl font-bold my-3">Available Donor List</h1>
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1">
+      <div></div>
+      <div class="card glass">
+        <div class="card-body">
+          <div class="grid grid-cols-2 gap-2">
+            <select class="select select-bordered w-full max-w-xs" id="search">
+              <option value="">All</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+            </select>
+            <button type="button" id="btnSearch" class="btn btn-primary">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-5 overflow-x-auto p-5">
+      <table class="table my-3">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Age</th>
+            <th>Blood Type</th>
+            <th>Donation Count</th>
+            <th>Phone No</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i = 0; i < donors.length;i++){%>
+          <tr>
+            <td><%= donors[i].name %></td>
+            <td><%= donors[i].code %></td>
+            <td><%= donors[i].age %></td>
+            <td><%= donors[i].bloodType %></td>
+            <td><%= donors[i].donationCount %></td>
+            <td><%= donors[i].phone %></td>
+            <td>
+              <a href="tel:<%=donors[i].phone%>" class="btn btn-primary btn-sm"
+                >Call</a
+              >
+            </td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script>
+    $("#btnSearch").click(function () {
+      location.href = "/admin/availableDonor?bloodType=" + $("#search").val();
+    });
+  </script>
+</html>

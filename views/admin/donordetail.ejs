@@ -38,7 +38,7 @@
         >
           <p>Blood Type : <%= donor.bloodType %></p>
           <p>Gender : <%= donor.gender %></p>
-          <p>Age : <%= donor.age %></p>
+          <p>Age : <span id="ageVal"></span></p>
           <p>Weight : <%= donor.weight %> Lbs</p>
         </div>
         <hr />
@@ -56,7 +56,7 @@
           <button class="btn btn-info" <%= (!donor.userStatus || !donor.donationStatus)? 'disabled':'' %>  onclick="donateToday()">
             Donate Today
           </button>
-          <button class="btn btn-secondary" <%= (!donor.userStatus && donor.donationStatus)? '':'disabled' %> onclick="sendAlert()" id="sentBtn">Sent Alert Mail</button>
+          <button class="btn btn-secondary" onclick="updatePass()" >Update Password</button>
           <a class="btn btn-primary" href="tel:<%=donor.phone%>"
             >Call to donor</a
           >
@@ -67,6 +67,12 @@
   <script src="/javascripts/jquery.min.js"></script>
   <script src="/javascripts/sweetalert2@11.js"></script>
   <script>
+    function _calculateAge(birthday) {
+      // birthday is a date
+      var ageDifMs = Date.now() - birthday.getTime();
+      var ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
     function donateToday() {
       Swal.fire({
         title: "Is donor donate today?",
@@ -117,5 +123,44 @@
         }
       });
     }
+    function updatePass(){
+      Swal.fire({
+        title: "Enter new password",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "Update",
+        showLoaderOnConfirm: true,
+        preConfirm: async (password) => {
+          try {
+            $.ajax("/admin/updateDonorPassword", {
+            type: "POST",
+            data: {password:password,id:'<%= donor._id %>'},
+            success: function (result) {
+              if (result.status == false) {
+                Swal.fire("Somethings was wrong", "", "info");
+              }
+            },
+          });
+          } catch (error) {
+            Swal.showValidationMessage(`
+              Somethings was wrong,please try again
+            `);
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Update password success`,
+          });
+        }
+      });
+    }
+    $(function(){
+      $("#ageVal").html(_calculateAge(new Date('<%= donor.dob %>')))
+    })
   </script>
 </html>
