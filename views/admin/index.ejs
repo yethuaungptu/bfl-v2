@@ -8,6 +8,37 @@
   </head>
   <body class="min-h-screen">
     <% include ../partial/admin_drawer %>
+    <h1 class="text-center text-3xl font-bold my-5">Total Avaliable Donors</h1>
+    <div class="mt-5 mx-2">
+      <div
+        class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
+      >
+        <div class="stat">
+          <div class="stat-title">Avaliable Donors</div>
+          <div class="stat-value"><%= activeDonorCount %></div>
+          <div class="stat-desc">At your area</div>
+        </div>
+        <% if(activeDonor.filter((item)=> item._id == "A+").length > 0){%>
+        <div class="stat">
+          <div class="stat-title">A+</div>
+          <div class="stat-value">
+            <%= activeDonor.filter((item)=> item._id == "A+").length > 0 ?
+            activeDonor.filter((item)=> item._id == "A+")[0].count : 0 %>
+          </div>
+          <div class="stat-desc">Active</div>
+        </div>
+        <%}%> <% if(activeDonor.filter((item)=> item._id == "A-").length > 0){%>
+        <div class="stat">
+          <div class="stat-title">A-</div>
+          <div class="stat-value">
+            <%= activeDonor.filter((item)=> item._id == "A-").length > 0 ?
+            activeDonor.filter((item)=> item._id == "A-")[0].count : 0 %>
+          </div>
+          <div class="stat-desc">Active</div>
+        </div>
+        <%}%>
+      </div>
+    </div>
     <h1 class="text-center text-3xl font-bold my-5">Total Donors</h1>
     <div class="mt-5 mx-2">
       <div
@@ -99,37 +130,7 @@
         <%}%>
       </div>
     </div>
-    <h1 class="text-center text-3xl font-bold my-5">Total Avaliable Donors</h1>
-    <div class="mt-5 mx-2">
-      <div
-        class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"
-      >
-        <div class="stat">
-          <div class="stat-title">Avaliable Donors</div>
-          <div class="stat-value"><%= activeDonorCount %></div>
-          <div class="stat-desc">At your area</div>
-        </div>
-        <% if(activeDonor.filter((item)=> item._id == "A+").length > 0){%>
-        <div class="stat">
-          <div class="stat-title">A+</div>
-          <div class="stat-value">
-            <%= activeDonor.filter((item)=> item._id == "A+").length > 0 ?
-            activeDonor.filter((item)=> item._id == "A+")[0].count : 0 %>
-          </div>
-          <div class="stat-desc">Active</div>
-        </div>
-        <%}%> <% if(activeDonor.filter((item)=> item._id == "A-").length > 0){%>
-        <div class="stat">
-          <div class="stat-title">A-</div>
-          <div class="stat-value">
-            <%= activeDonor.filter((item)=> item._id == "A-").length > 0 ?
-            activeDonor.filter((item)=> item._id == "A-")[0].count : 0 %>
-          </div>
-          <div class="stat-desc">Active</div>
-        </div>
-        <%}%>
-      </div>
-    </div>
+
     <div class="mt-5 mx-2">
       <div
         class="stats stats-vertical lg:stats-horizontal shadow grid grid-cols-3"

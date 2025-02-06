@@ -16,7 +16,7 @@ const checkAdmin = function (req, res, next) {
 };
 router.get("/", checkAdmin, async function (req, res, next) {
   const donationCount = await History.countDocuments();
-  const donorCount = await Donor.countDocuments();
+  const donorCount = await Donor.countDocuments({ status: true });
   const adminCount = await Admin.countDocuments();
   const donors = await Donor.aggregate([
     {

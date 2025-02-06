@@ -125,6 +125,7 @@ router.post("/donorSearch", async function (req, res) {
       state: req.body.state,
       district: req.body.district,
     });
+    console.log(donors.length, allDonorCount);
     res.json({
       status: true,
       donors: donors,
