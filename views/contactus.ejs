@@ -14,10 +14,16 @@
       <div class="collapse collapse-plus bg-base-200">
         <input type="radio" name="my-accordion-1" checked="checked" />
         <div class="collapse-title text-xl font-medium">
-          <h2 class="card-title">Ayeyawaddy</h2>
+          <h2 class="card-title">Ayeyawaddy Region</h2>
         </div>
         <div class="collapse-content">
-          <p class="text-center text-xl font-bold">Admin List</p>
+          <p class="text-center text-xl font-bold">
+            Admin Contact List By Township
+          </p>
+          <div class="grid grid-cols-2 border-2 border-primary p-2 rounded">
+            <h3 class="font-bold">Township</h3>
+            <h3 class="font-bold">Phones</h3>
+          </div>
           <% for(var j = 0; j < admins[i].admin.length;j++){%>
           <div class="grid grid-cols-2 border-2 border-primary p-2 rounded">
             <p><%= admins[i].admin[j].district %></p>
